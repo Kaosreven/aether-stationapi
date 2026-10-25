@@ -1,0 +1,91 @@
+package io.github.kaosreven.aether.mixin;
+
+import io.github.kaosreven.aether.gen.dim.BareAetherTravelAgent;
+import io.github.kaosreven.aether.item.AetherItems;
+import io.github.kaosreven.aether.poison.AetherPoison;
+import io.github.kaosreven.aether.poison.PoisonControl;
+import io.github.kaosreven.aether.util.VoidUtil;
+import net.fabricmc.api.EnvType;
+import net.fabricmc.loader.api.FabricLoader;
+import net.minecraft.entity.Entity;
+import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.world.World;
+import net.modificationstation.stationapi.api.registry.DimensionRegistry;
+import net.modificationstation.stationapi.api.world.dimension.DimensionHelper;
+import net.modificationstation.stationapi.api.world.dimension.VanillaDimensions;
+import org.jetbrains.annotations.NotNull;
+import org.spongepowered.asm.mixin.Mixin;
+import org.spongepowered.asm.mixin.Shadow;
+import org.spongepowered.asm.mixin.Unique;
+import org.spongepowered.asm.mixin.injection.At;
+import org.spongepowered.asm.mixin.injection.Inject;
+import org.spongepowered.asm.mixin.injection.Redirect;
+import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
+
+import java.util.OptionalInt;
+
+import static io.github.kaosreven.aether.gen.dim.AetherDimensions.MOD_ID;
+
+@Mixin(Entity.class)
+public abstract class EntityMixinPoisonFallVoid implements AetherPoison {
+
+    @Unique
+    PoisonControl poisonControl = new PoisonControl((Entity) (Object) this);
+
+    public PoisonControl getPoison() {
+        return poisonControl;
+    }
+
+    @Inject(method = "tick", at = @At("HEAD"))
+    void poisonTick(CallbackInfo ci) {
+        poisonControl.onTick();
+    }
+
+    // Falling out of world below
+    @Shadow
+    public World world;
+
+    @Shadow public double x;
+
+    @Shadow public double y;
+
+    @Shadow public double z;
+
+    @Redirect(method = "baseTick", at = @At(value = "INVOKE", target = "Lnet/minecraft/entity/Entity;tickInVoid()V"))
+    public void modify(Entity instance) {
+        if (instance instanceof PlayerEntity player) {
+            @NotNull OptionalInt dimensionId = DimensionRegistry.INSTANCE.getLegacyId(MOD_ID.id("the_aether"));
+
+            if (dimensionId.isPresent() && player.dimensionId == dimensionId.getAsInt()) {
+                if (FabricLoader.getInstance().getEnvironmentType() == EnvType.CLIENT) {
+                    if (!world.isRemote) {
+                        // Client executes on client world
+                        DimensionHelper.switchDimension(player, VanillaDimensions.OVERWORLD, 1, new BareAetherTravelAgent());
+                        VoidUtil.teleport(player, player.x, 200, player.z);
+                    }
+                } else {
+                    // Server executes on server world
+                    DimensionHelper.switchDimension(player, VanillaDimensions.OVERWORLD, 1, new BareAetherTravelAgent());
+                    VoidUtil.teleport(player, player.x, 200, player.z);
+                }
+
+                for (int i = 0; i < player.inventory.main.length; i++) {
+                    if (player.inventory.main[i] == null)
+                        continue;
+                    if (player.inventory.main[i].itemId == AetherItems.CloudParachute.id) {
+                        player.inventory.main[i].use(world, player);
+                        player.inventory.main[i] = null;
+                        break;
+                    }
+                    if (player.inventory.main[i].itemId == AetherItems.CloudParachuteGold.id) {
+                        player.inventory.main[i].use(world, player);
+                        break;
+                    }
+                }
+
+                return;
+            }
+        }
+        instance.tickInVoid();
+    }
+}

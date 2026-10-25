@@ -1,0 +1,53 @@
+{
+  "schemaVersion": 1,
+  "id": "${mod_id}",
+  "version": "${mod_version}",
+
+  "name": "${mod_name}",
+  "description": "${mod_description}",
+  "authors": [
+    "Kaosreven",
+    "GildedGames"
+  ],
+  "contact": {
+    "sources": "${mod_source}"
+  },
+
+  "license": "${mod_license}",
+  "icon": "assets/${mod_id}/icon.png",
+
+  "environment": "*",
+  "entrypoints": {
+    "main": [
+      "${maven_group}.${mod_id}.Aether"
+    ],
+    "stationapi:event_bus": [
+      "${maven_group}.${mod_id}.item.AetherItems",
+      "${maven_group}.${mod_id}.block.AetherBlocks",
+      "${maven_group}.${mod_id}.blockentity.AetherBlockEntities",
+      "${maven_group}.${mod_id}.entity.AetherEntities",
+      "${maven_group}.${mod_id}.events.AetherRecipes",
+      "${maven_group}.${mod_id}.achievement.AetherAchievements",
+      "${maven_group}.${mod_id}.gen.portal.AetherPortalListener",
+      "${maven_group}.${mod_id}.gen.biome.AetherBiomes",
+      "${maven_group}.${mod_id}.gen.dim.AetherDimensions",
+      "${maven_group}.${mod_id}.gen.dim.AetherChunkListener",
+      "${maven_group}.${mod_id}.events.AetherPacketListener"
+    ],
+    "stationapi:event_bus_client": [
+      "${maven_group}.${mod_id}.client.AetherTextures",
+      "${maven_group}.${mod_id}.client.entity.AetherEntityRenderers",
+      "${maven_group}.${mod_id}.client.gui.AetherGuis"
+    ],
+    "stationapi:event_bus_server": [
+    ]
+  },
+  "mixins": [
+    "${mod_id}.mixins.json"
+  ],
+
+  "depends": {
+    "fabricloader": ">=${loader_version}",
+    "minecraft": "1.0.0-beta.7.3"
+  }
+}

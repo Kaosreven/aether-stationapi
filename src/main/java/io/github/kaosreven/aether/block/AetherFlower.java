@@ -25,28 +25,4 @@ public class AetherFlower extends TemplatePlantBlock {
     protected boolean canPlantOnTop(int var1) {
         return var1 == AetherBlocks.Grass.id || var1 == AetherBlocks.Dirt.id;
     }
-
-    @Override
-    public void neighborUpdate(World var1, int var2, int var3, int var4, int var5) {
-        super.neighborUpdate(var1, var2, var3, var4, var5);
-        this.func_268_h(var1, var2, var3, var4);
-    }
-
-    @Override
-    public void onTick(World var1, int var2, int var3, int var4, Random var5) {
-        this.func_268_h(var1, var2, var3, var4);
-    }
-
-    protected final void func_268_h(World var1, int var2, int var3, int var4) {
-        if (!this.canGrow(var1, var2, var3, var4)) {
-            this.dropStacks(var1, var2, var3, var4, var1.getBlockMeta(var2, var3, var4));
-            var1.setBlock(var2, var3, var4, 0);
-        }
-
-    }
-
-    @Override
-    public boolean canGrow(World var1, int var2, int var3, int var4) {
-        return (var1.getBrightness(var2, var3, var4) >= 8 || var1.hasSkyLight(var2, var3, var4)) && this.canPlantOnTop(var1.getBlockId(var2, var3 - 1, var4));
-    }
 }

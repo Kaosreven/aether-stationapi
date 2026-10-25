@@ -13,9 +13,6 @@ public class AetherGenBuildings extends Feature {
     public boolean replaceAir;
     public boolean replaceSolid;
 
-    public AetherGenBuildings() {
-    }
-
     public boolean generate(World world, Random random, int i, int j, int k) {
         return false;
     }

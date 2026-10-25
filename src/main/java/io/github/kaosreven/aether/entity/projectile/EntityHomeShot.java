@@ -21,8 +21,6 @@ public class EntityHomeShot extends FlyingEntity implements MobSpawnDataProvider
     public boolean firstRun;
     public int life;
     public int lifeSpan;
-    private static final double topSpeed = 0.125;
-    private static final float sponge = 57.295773F;
 
     public EntityHomeShot(World world) {
         super(world);
@@ -88,7 +86,7 @@ public class EntityHomeShot extends FlyingEntity implements MobSpawnDataProvider
     }
 
     public void moveIt(Entity e1, double sped) {
-        double angle1 = (double) (this.yaw / 57.295773F);
+        double angle1 = this.yaw / 57.295773F;
         this.velocityX -= Math.sin(angle1) * sped;
         this.velocityZ += Math.cos(angle1) * sped;
         double a = e1.y - 0.75;
@@ -131,20 +129,6 @@ public class EntityHomeShot extends FlyingEntity implements MobSpawnDataProvider
     public void readNbt(NbtCompound nbttagcompound) {
         super.readNbt(nbttagcompound);
         this.life = nbttagcompound.getShort("LifeLeft");
-    }
-
-    public void checkOverLimit() {
-        double a = this.target.x - this.x;
-        double b = this.target.y - this.y;
-        double c = this.target.z - this.z;
-        double d = Math.sqrt(a * a + b * b + c * c);
-        if (d > 0.125) {
-            double e = 0.125 / d;
-            this.velocityX *= e;
-            this.velocityY *= e;
-            this.velocityZ *= e;
-        }
-
     }
 
     public Entity findPlayerToAttack() {

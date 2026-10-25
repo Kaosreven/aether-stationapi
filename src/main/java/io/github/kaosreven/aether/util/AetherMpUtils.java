@@ -23,7 +23,7 @@ public class AetherMpUtils {
     @Environment(EnvType.SERVER)
     public static void soundPacket(World world, int x, int y, int z, String name, float g, float h) {
         List list2 = world.players;
-        if (list2.size() != 0) {
+        if (!list2.isEmpty()) {
             for (int k = 0; k < list2.size(); k++) {
                 ServerPlayerEntity player1 = (ServerPlayerEntity) list2.get(k);
                 PacketHelper.sendTo(player1, new SoundPacket(name, x, y, z, g, h));
@@ -34,7 +34,7 @@ public class AetherMpUtils {
     @Environment(EnvType.SERVER)
     public static void playerSoundPacket(World world, String name, int id, float g, float h) {
         List list2 = world.players;
-        if (list2.size() != 0) {
+        if (!list2.isEmpty()) {
             for (int k = 0; k < list2.size(); k++) {
                 ServerPlayerEntity player1 = (ServerPlayerEntity) list2.get(k);
                 PacketHelper.sendTo(player1, new SoundPlayerPacket(name, id, g, h));

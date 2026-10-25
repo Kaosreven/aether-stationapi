@@ -49,14 +49,12 @@ public class AetherLog extends TemplateBlock implements MetaNamedBlockItemProvid
 
                 ItemStack heldItem = player.inventory.main[player.inventory.selectedSlot];
 
-                /*
                 if (heldItem != null && (heldItem.itemId == AetherItems.AxeZanite.id || heldItem.itemId == AetherItems.AxeGravitite.id)) {
                     if (meta > 1) {
                         ItemStack stack = new ItemStack(AetherItems.GoldenAmber.id, rand.nextInt(1,4), 0);
                         world.spawnEntity(new ItemEntity(world, x, y, z, stack));
                     }
                 }
-                 */
             }
 
             for(int i = 0; i < count; ++i) {

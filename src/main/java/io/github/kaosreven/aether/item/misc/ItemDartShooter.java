@@ -33,8 +33,7 @@ public class ItemDartShooter extends TemplateItem {
     }
 
     public String getTranslationKey(ItemStack stack) {
-        int i = stack.getDamage();
-        return this.getTranslationKey() + i;
+        return this.getTranslationKey() + stack.getDamage();
     }
 
     public ItemStack use(ItemStack itemstack, World world, PlayerEntity entityplayer) {

@@ -7,7 +7,6 @@ import org.lwjgl.opengl.GL11;
 public class ModelHomeShot extends EntityModel {
     public ModelPart[] head;
     public float[] sinage;
-    private static final float sponge = 57.295773F;
 
     public ModelHomeShot() {
         this(0.0F);

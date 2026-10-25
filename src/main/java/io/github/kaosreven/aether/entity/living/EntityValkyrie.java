@@ -8,7 +8,6 @@ import com.periut.accessoryapi.api.BossLivingEntity;
 import net.minecraft.block.Block;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.LivingEntity;
-import net.minecraft.entity.ai.pathing.Path;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
@@ -167,7 +166,7 @@ public class EntityValkyrie extends EntityDungeonMob implements BossLivingEntity
             this.sinage -= 6.283186F;
         }
 
-        if (!this.otherDimension()) {
+        if (this.otherDimension()) {
             --this.timeLeft;
             if (this.timeLeft <= 0) {
                 this.dead = true;
@@ -177,7 +176,7 @@ public class EntityValkyrie extends EntityDungeonMob implements BossLivingEntity
     }
 
     public boolean otherDimension() {
-        return true;
+        return false;
     }
 
     public void teleport(double x, double y, double z, int rad) {
@@ -187,9 +186,9 @@ public class EntityValkyrie extends EntityDungeonMob implements BossLivingEntity
         a *= this.random.nextInt(2) * 2 - 1;
         b *= this.random.nextInt(2) * 2 - 1;
         c *= this.random.nextInt(2) * 2 - 1;
-        x += (double) a;
-        y += (double) b;
-        z += (double) c;
+        x += a;
+        y += b;
+        z += c;
         int newX = (int) Math.floor(x - 0.5);
         int newY = (int) Math.floor(y - 0.5);
         int newZ = (int) Math.floor(z - 0.5);
@@ -220,7 +219,7 @@ public class EntityValkyrie extends EntityDungeonMob implements BossLivingEntity
             this.jumping = false;
             this.pitch = 0.0F;
             this.yaw = 0.0F;
-            this.setPath((Path) null);
+            this.setPath(null);
             this.bodyYaw = this.random.nextFloat() * 360.0F;
             this.animateSpawn();
             this.teleTimer = this.random.nextInt(40);
@@ -431,7 +430,7 @@ public class EntityValkyrie extends EntityDungeonMob implements BossLivingEntity
     }
 
     protected Entity getTargetInRange() {
-        return !this.otherDimension() || this.world.difficulty > 0 && (!this.boss || this.duel) && this.angerLevel > 0 ? super.getTargetInRange() : null;
+        return this.otherDimension() || this.world.difficulty > 0 && (!this.boss || this.duel) && this.angerLevel > 0 ? super.getTargetInRange() : null;
     }
 
     public boolean damage(Entity entity, int i) {
@@ -511,8 +510,7 @@ public class EntityValkyrie extends EntityDungeonMob implements BossLivingEntity
             this.attackCooldown = 20;
             this.swingArm();
             entity.damage(this, this.attackStrength);
-            if (entity != null && this.target != null && entity == this.target && entity instanceof LivingEntity) {
-                LivingEntity e1 = (LivingEntity) entity;
+            if (entity != null && this.target != null && entity == this.target && entity instanceof LivingEntity e1) {
                 if (e1.health <= 0) {
                     this.target = null;
                     this.angerLevel = 0;
@@ -526,8 +524,7 @@ public class EntityValkyrie extends EntityDungeonMob implements BossLivingEntity
                         setBoss(false);
                     } else if (pokey == 2) {
                         this.chatItUp("You want a medallion? Try being less pathetic.");
-                    } else if (pokey == 1 && e1 instanceof PlayerEntity) {
-                        PlayerEntity ep = (PlayerEntity) e1;
+                    } else if (pokey == 1 && e1 instanceof PlayerEntity ep) {
                         String s = ep.name;
                         this.chatItUp("Maybe some day, " + s + "... maybe some day.");
                     } else {

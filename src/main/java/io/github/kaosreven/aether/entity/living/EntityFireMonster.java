@@ -49,7 +49,6 @@ public class EntityFireMonster extends FlyingEntity implements BossLivingEntity,
     public Entity target;
     public boolean gotTarget;
     public String bossName;
-    public static final float jimz = 57.295773F;
     int areaOfEffect = 50;
 
     public EntityFireMonster(World world) {
@@ -72,7 +71,7 @@ public class EntityFireMonster extends FlyingEntity implements BossLivingEntity,
         super(world);
         this.texture = "aether:stationapi/textures/mobs/firemonster.png";
         this.setBoundingBoxSpacing(2.25F, 2.5F);
-        this.setPosition((double) x + 0.5, (double) y, (double) z + 0.5);
+        this.setPosition((double) x + 0.5, y, (double) z + 0.5);
         this.wideness = rad - 2;
         this.orgX = x;
         this.orgY = y;
@@ -117,9 +116,9 @@ public class EntityFireMonster extends FlyingEntity implements BossLivingEntity,
     public void tick() {
         super.tick();
         if (this.health > 0) {
-            double a = (double) (this.random.nextFloat() - 0.5F);
-            double b = (double) this.random.nextFloat();
-            double c = (double) (this.random.nextFloat() - 0.5F);
+            double a = this.random.nextFloat() - 0.5F;
+            double b = this.random.nextFloat();
+            double c = this.random.nextFloat() - 0.5F;
             double d = this.x + a * b;
             double e = this.boundingBox.minY + b - 0.5;
             double f = this.z + c * b;
@@ -165,11 +164,11 @@ public class EntityFireMonster extends FlyingEntity implements BossLivingEntity,
         }
 
         if (this.target == null) {
-            this.setPosition((double) this.orgX + 0.5, (double) this.orgY, (double) this.orgZ + 0.5);
+            this.setPosition((double) this.orgX + 0.5, this.orgY, (double) this.orgZ + 0.5);
             this.setDoor(0);
         } else {
             this.bodyYaw = this.yaw;
-            this.setPosition(this.x, (double) this.orgY, this.z);
+            this.setPosition(this.x, this.orgY, this.z);
             this.velocityY = 0.0;
             boolean pool = false;
             if (this.velocityX > 0.0 && (int) Math.floor(this.x) > this.orgX + this.wideness) {
@@ -218,7 +217,7 @@ public class EntityFireMonster extends FlyingEntity implements BossLivingEntity,
             }
 
             if (this.target != null && this.target.dead) {
-                this.setPosition((double) this.orgX + 0.5, (double) this.orgY, (double) this.orgZ + 0.5);
+                this.setPosition((double) this.orgX + 0.5, this.orgY, (double) this.orgZ + 0.5);
                 this.velocityX = 0.0;
                 this.velocityY = 0.0;
                 this.velocityZ = 0.0;
@@ -237,7 +236,7 @@ public class EntityFireMonster extends FlyingEntity implements BossLivingEntity,
 
         for (int j = 0; j < list.size(); ++j) {
             Entity entity1 = (Entity) list.get(j);
-            if (entity1 instanceof LivingEntity living && !((EntityAccessor) entity1).isImmuneToFire()) {
+            if (entity1 instanceof LivingEntity && !((EntityAccessor) entity1).isImmuneToFire()) {
                 entity1.damage(this, 10);
                 entity1.fireTicks = 300;
             }
@@ -253,7 +252,7 @@ public class EntityFireMonster extends FlyingEntity implements BossLivingEntity,
             int b = this.orgY - 2 + i;
             if (this.world.getMaterial(x, b, z) == Material.WATER) {
                 this.world.setBlock(x, b, z, 0);
-                this.world.playSound((double) ((float) x + 0.5F), (double) ((float) b + 0.5F), (double) ((float) z + 0.5F), "random.fizz", 0.5F, 2.6F + (this.random.nextFloat() - this.random.nextFloat()) * 0.8F);
+                this.world.playSound((float) x + 0.5F, (float) b + 0.5F, (float) z + 0.5F, "random.fizz", 0.5F, 2.6F + (this.random.nextFloat() - this.random.nextFloat()) * 0.8F);
 
                 for (int l = 0; l < 8; ++l) {
                     this.world.addParticle("largesmoke", (double) x + Math.random(), (double) b + 0.75, (double) z + Math.random(), 0.0, 0.0, 0.0);
@@ -403,7 +402,7 @@ public class EntityFireMonster extends FlyingEntity implements BossLivingEntity,
     }
 
     public boolean damage(Entity e, int i) {
-        if (e != null && e instanceof EntityFiroBall) {
+        if (e instanceof EntityFiroBall) {
             this.speedness = 0.5 - (double) this.health / 70.0 * 0.2;
             boolean flag = super.damage(e, i);
             if (flag) {

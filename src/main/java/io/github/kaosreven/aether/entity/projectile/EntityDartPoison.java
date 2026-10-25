@@ -1,6 +1,8 @@
 package io.github.kaosreven.aether.entity.projectile;
 
 import io.github.kaosreven.aether.item.AetherItems;
+import io.github.kaosreven.aether.poison.AetherPoison;
+import io.github.kaosreven.aether.poison.PoisonControl;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.item.ItemStack;
@@ -36,14 +38,12 @@ public class EntityDartPoison extends EntityDartGolden implements EntitySpawnDat
     }
 
     public boolean onHitTarget(Entity target) {
-        /*
         if (target instanceof AetherPoison poison) {
             poison.getPoison().afflictPoison();
             dead = false;
             despawnTime = PoisonControl.maxPoisonTime;
             markDead();
         }
-         */
         return super.onHitTarget(target);
     }
 

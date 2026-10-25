@@ -1,6 +1,5 @@
 package io.github.kaosreven.aether.mixin;
 
-import io.github.kaosreven.aether.Aether;
 import io.github.kaosreven.aether.block.AetherBlocks;
 import net.minecraft.inventory.CraftingInventory;
 import net.minecraft.item.ItemStack;
@@ -8,6 +7,7 @@ import net.minecraft.recipe.CraftingRecipe;
 import net.minecraft.recipe.CraftingRecipeManager;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;
+import org.spongepowered.asm.mixin.Unique;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
@@ -40,7 +40,8 @@ public abstract class CraftingRecipeManagerMixin
 		}
 	}
 
-	private static boolean isAetherItem(ItemStack stack)
+	@Unique
+    private static boolean isAetherItem(ItemStack stack)
 	{
 		return stack.getItem().getTranslationKey().contains(AetherBlocks.MOD_ID.toString());
 	}

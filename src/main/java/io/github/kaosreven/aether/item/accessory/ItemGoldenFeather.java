@@ -12,10 +12,8 @@ public class ItemGoldenFeather extends ItemMoreArmor {
 
     public static void slowFall(PlayerEntity player) {
         if (player.velocityY < 0) {
-            if (player.isSneaking()) // isSneaking
-                player.velocityY *= 0.9;
+            if (player.isSneaking()) player.velocityY *= 0.9;
             else player.velocityY *= 0.6;
-
             ((EntityAccessor) (player)).setFallDistance(-1.0F);
         }
     }

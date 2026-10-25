@@ -71,21 +71,14 @@ public class ItemMoreArmor extends TemplateItem implements Accessory {
 
     @Override
     public String[] getAccessoryTypes(ItemStack item) {
-        switch (armorType) {
-            case 4:
-                return new String[]{"pendant"};
-            case 5:
-                return new String[]{"cape"};
-            case 6:
-                return new String[]{"shield"};
-            case 7:
-                return new String[]{"misc"};
-            case 8:
-                return new String[]{"ring"};
-            case 10:
-                return new String[]{"gloves"};
-            default:
-                return new String[0];
-        }
+        return switch (armorType) {
+            case 4 -> new String[]{"pendant"};
+            case 5 -> new String[]{"cape"};
+            case 6 -> new String[]{"shield"};
+            case 7 -> new String[]{"misc"};
+            case 8 -> new String[]{"ring"};
+            case 10 -> new String[]{"gloves"};
+            default -> new String[0];
+        };
     }
 }

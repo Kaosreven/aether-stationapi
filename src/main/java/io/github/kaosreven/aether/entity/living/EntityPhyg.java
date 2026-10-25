@@ -1,6 +1,5 @@
 package io.github.kaosreven.aether.entity.living;
 
-import io.github.kaosreven.aether.achievement.AetherAchievements;
 import io.github.kaosreven.aether.entity.MountInput;
 import io.github.kaosreven.aether.mixin.access.EntityAccessor;
 import net.minecraft.entity.LivingEntity;

@@ -164,8 +164,7 @@ public class EntitySlider extends FlyingEntity implements BossLivingEntity, MobS
 
             // Server-side AI
             if (this.awake) {
-                if (this.target != null && this.target instanceof LivingEntity) {
-                    LivingEntity e1 = (LivingEntity) this.target;
+                if (this.target != null && this.target instanceof LivingEntity e1) {
                     if (e1.health <= 0) {
                         this.awake = false;
                         setBoss(false);
@@ -374,10 +373,9 @@ public class EntitySlider extends FlyingEntity implements BossLivingEntity, MobS
     public void onCollision(Entity entity) {
         if (this.awake && this.gotMovement) {
             boolean flag = entity.damage(this, 6);
-            if (flag && entity instanceof LivingEntity) {
+            if (flag && entity instanceof LivingEntity ek) {
                 this.world.playSound(this, "aether:bosses.slider.slidercollide", 2.5F, 1.0F / (this.random.nextFloat() * 0.2F + 0.9F));
                 if (entity instanceof MobEntity || entity instanceof PlayerEntity) {
-                    LivingEntity ek = (LivingEntity) entity;
                     ek.velocityY += 0.35;
                     ek.velocityX *= 2.0;
                     ek.velocityZ *= 2.0;
@@ -421,8 +419,7 @@ public class EntitySlider extends FlyingEntity implements BossLivingEntity, MobS
     }
 
     public boolean damage(Entity e1, int i) {
-        if (e1 != null && e1 instanceof PlayerEntity) {
-            PlayerEntity p1 = (PlayerEntity) e1;
+        if (e1 instanceof PlayerEntity p1) {
             ItemStack stack = p1.getHand();
             if (stack != null && stack.getItem() != null) {
                 if (stack.getItem() instanceof ToolItem) {

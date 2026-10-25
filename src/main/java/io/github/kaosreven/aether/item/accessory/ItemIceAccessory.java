@@ -1,6 +1,6 @@
 package io.github.kaosreven.aether.item.accessory;
 
-import net.minecraft.block.material.Material;
+import net.minecraft.block.Block;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.math.MathHelper;
@@ -18,25 +18,20 @@ public class ItemIceAccessory extends ItemMoreArmor {
         final int i = MathHelper.floor(player.x);
         final int j = MathHelper.floor(player.boundingBox.minY);
         final int k = MathHelper.floor(player.z);
-        final double yoff = player.y - j;
-        final Material mat0 = player.world.getMaterial(i, j, k);
-        final Material mat2 = player.world.getMaterial(i, j - 1, k);
         for (int l = i - 1; l <= i + 1; ++l) {
             for (int i2 = j - 1; i2 <= j + 1; ++i2) {
                 for (int j2 = k - 1; j2 <= k + 1; ++j2) {
-                    if (player.world.getBlockId(l, i2, j2) == 8) {
-                        player.world.setBlock(l, i2, j2, 79);
-                        froze = true;
-                    } else if (player.world.getBlockId(l, i2, j2) == 9) {
-                        player.world.setBlock(l, i2, j2, 79);
-                        froze = true;
-                    } else if (player.world.getBlockId(l, i2, j2) == 10) {
-                        player.world.setBlock(l, i2, j2, 49);
-                        froze = true;
-                    } else if (player.world.getBlockId(l, i2, j2) == 11) {
-                        player.world.setBlock(l, i2, j2, 49);
-                        froze = true;
-                    }
+                    froze = switch (player.world.getBlockId(l, i2, j2)) {
+                        case 8, 9 -> {
+                            player.world.setBlock(l, i2, j2, Block.ICE.id);
+                            yield true;
+                        }
+                        case 10, 11 -> {
+                            player.world.setBlock(l, i2, j2, Block.OBSIDIAN.id);
+                            yield true;
+                        }
+                        default -> froze;
+                    };
                 }
             }
         }

@@ -75,57 +75,6 @@ public class AetherGrass extends TemplateBlock {
         this.dropStacks(world, i, j, k, l);
     }
 
-    /*
-    public boolean onUse(World world, int i, int j, int k, PlayerEntity entityPlayer) {
-        if (world.isRemote) {
-            return false;
-        } else if (entityPlayer == null) {
-            return false;
-        } else {
-            ItemStack itemStack = entityPlayer.getHand();
-            if (itemStack == null) {
-                return false;
-            } else if (itemStack.itemId != Item.DYE.id) {
-                return false;
-            } else if (itemStack.getDamage() != 15) {
-                return false;
-            } else {
-                --itemStack.count;
-                int iSpawned = 0;
-
-                label54:
-                for (int var9 = 0; var9 < 64; ++var9) {
-                    int var10 = i;
-                    int var11 = j + 1;
-                    int var12 = k;
-
-                    for (int var13 = 0; var13 < var9 / 16; ++var13) {
-                        var10 += world.random.nextInt(3) - 1;
-                        var11 += (world.random.nextInt(3) - 1) * world.random.nextInt(3) / 2;
-                        var12 += world.random.nextInt(3) - 1;
-                        if (world.getBlockId(var10, var11 - 1, var12) != this.id || world.shouldSuffocate(var10, var11, var12)) {
-                            continue label54;
-                        }
-                    }
-
-                    if (world.getBlockId(var10, var11, var12) == 0) {
-                        if (world.random.nextInt(20 + 10 * iSpawned) == 0) {
-                            world.setBlock(var10, var11, var12, AetherBlocks.WhiteFlower.id);
-                            ++iSpawned;
-                        } else if (world.random.nextInt(10 + 2 * iSpawned) <= 2) {
-                            world.setBlock(var10, var11, var12, AetherBlocks.PurpleFlower.id);
-                            ++iSpawned;
-                        }
-                    }
-                }
-
-                return true;
-            }
-        }
-    }
-
-     */
-
     @Override
     public void onPlaced(World arg, int i, int j, int k) {
         super.onPlaced(arg, i, j, k);

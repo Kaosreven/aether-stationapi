@@ -24,9 +24,9 @@ public class EntityFireMinion extends MonsterEntity implements MobSpawnDataProvi
         super.tick();
         if (this.health > 0) {
             for (int j = 0; j < 4; ++j) {
-                double a = (double) (this.random.nextFloat() - 0.5F);
-                double b = (double) this.random.nextFloat();
-                double c = (double) (this.random.nextFloat() - 0.5F);
+                double a = this.random.nextFloat() - 0.5F;
+                double b = this.random.nextFloat();
+                double c = this.random.nextFloat() - 0.5F;
                 double d = this.x + a * b;
                 double e = this.boundingBox.minY + b - 0.5;
                 double f = this.z + c * b;

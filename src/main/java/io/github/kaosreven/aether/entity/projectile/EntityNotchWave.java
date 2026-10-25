@@ -1,6 +1,5 @@
 package io.github.kaosreven.aether.entity.projectile;
 
-import io.github.kaosreven.aether.entity.living.EntitySlider;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.player.PlayerEntity;
@@ -30,8 +29,6 @@ public class EntityNotchWave extends Entity implements EntitySpawnDataProvider {
     private boolean inGroundSnowball = false;
     public int shakeSnowball = 0;
     private LivingEntity thrower;
-    private EntitySlider slider;
-    private int ticksInGroundSnowball;
     private int ticksInAirSnowball = 0;
 
     public EntityNotchWave(World world) {
@@ -67,7 +64,6 @@ public class EntityNotchWave extends Entity implements EntitySpawnDataProvider {
 
     public EntityNotchWave(World world, double d, double d1, double d2) {
         super(world);
-        this.ticksInGroundSnowball = 0;
         this.setBoundingBoxSpacing(0.25F, 0.25F);
         this.setPositionAndAngles(d, d1, d2, this.yaw, this.pitch);
         this.standingEyeHeight = 0.0F;
@@ -90,7 +86,6 @@ public class EntityNotchWave extends Entity implements EntitySpawnDataProvider {
         float f3 = MathHelper.sqrt(d * d + d2 * d2);
         this.prevYaw = this.yaw = (float) (Math.atan2(d, d2) * 180.0 / 3.1415927410125732);
         this.prevPitch = this.pitch = (float) (Math.atan2(d1, f3) * 180.0 / 3.1415927410125732);
-        this.ticksInGroundSnowball = 0;
     }
 
     public void setVelocityClient(double d, double d1, double d2) {
@@ -164,7 +159,7 @@ public class EntityNotchWave extends Entity implements EntitySpawnDataProvider {
         }
 
         if (movingobjectposition != null) {
-            if (movingobjectposition.entity != null && movingobjectposition.entity != this.thrower && movingobjectposition.entity != this.slider) {
+            if (movingobjectposition.entity != null && movingobjectposition.entity != this.thrower) {
                 if (!movingobjectposition.entity.damage(this.thrower, 0)) {
                 }
 
@@ -211,7 +206,6 @@ public class EntityNotchWave extends Entity implements EntitySpawnDataProvider {
         this.pitch = this.prevPitch + (this.pitch - this.prevPitch) * 0.2F;
         this.yaw = this.prevYaw + (this.yaw - this.prevYaw) * 0.2F;
         float f1 = 0.99F;
-        float f2 = 0.03F;
         if (this.isSubmergedInWater()) {
             for (int k = 0; k < 4; ++k) {
                 float f3 = 0.25F;

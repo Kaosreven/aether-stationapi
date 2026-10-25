@@ -76,7 +76,6 @@ public class SoundPacket extends Packet implements ManagedPacket<SoundPacket> {
 
     @Environment(EnvType.CLIENT)
     public void handleClient(NetworkHandler networkHandler) {
-        /// Used on sounds that i cannot fir in Vanilla Packet54PlayNoteBlock (data1/2 is converted to byte on server, limit 256)
         Minecraft.INSTANCE.world.playSound((double) this.x + 0.5D, (double) this.y + 0.5D, (double) this.z + 0.5D, this.soundToPlay, this.g, this.h);
     }
 

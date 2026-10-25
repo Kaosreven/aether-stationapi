@@ -18,6 +18,6 @@ public class RenderValkyrie extends UndeadEntityRenderer {
         EntityValkyrie v1 = (EntityValkyrie) entityliving;
         this.mv1.sinage = v1.sinage;
         this.mv1.gonRound = v1.onGround;
-        this.mv1.halow = !v1.otherDimension();
+        this.mv1.halow = v1.otherDimension();
     }
 }

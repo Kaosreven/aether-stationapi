@@ -7,8 +7,6 @@ import net.minecraft.world.gen.feature.Feature;
 import java.util.Random;
 
 public class AetherGenSkyroot extends Feature {
-    public AetherGenSkyroot() {
-    }
 
     public boolean generate(World world, Random random, int i, int j, int k) {
         int l = random.nextInt(3) + 4;

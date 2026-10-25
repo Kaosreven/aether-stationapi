@@ -12,12 +12,7 @@ public class ItemAetherKey extends TemplateItem {
     }
 
     public String getTranslationKey(ItemStack stack) {
-        int i = stack.getDamage();
-        if (i > 2) {
-            i = 2;
-        }
-
-        return this.getTranslationKey() + i;
+        return this.getTranslationKey() + stack.getDamage();
     }
 
     public int getColorMultiplier(int damage) {

@@ -12,7 +12,6 @@ import net.minecraft.client.Minecraft;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
-import net.minecraft.server.MinecraftServer;
 import net.modificationstation.stationapi.api.event.achievement.AchievementRegisterEvent;
 import net.modificationstation.stationapi.api.event.container.slot.ItemUsedInCraftingEvent;
 import net.modificationstation.stationapi.api.mod.entrypoint.Entrypoint;
@@ -21,7 +20,6 @@ import net.modificationstation.stationapi.api.util.Namespace;
 import net.modificationstation.stationapi.api.util.SideUtil;
 
 import java.util.ArrayList;
-import java.util.List;
 
 public class AetherAchievements {
     @Entrypoint.Namespace

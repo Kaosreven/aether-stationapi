@@ -1,4 +1,4 @@
-package io.github.kaosreven.aether.util;
+package io.github.kaosreven.aether.util.item;
 
 import io.github.kaosreven.aether.item.AetherItems;
 import com.periut.accessoryapi.api.helper.AccessoryAccess;
@@ -19,6 +19,8 @@ public class ZaniteMiningController {
             this.multiplier = multiplier;
         }
     }
+
+
 
     static ArrayList<PlayerData> data = new ArrayList<>();
 

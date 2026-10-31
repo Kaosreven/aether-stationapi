@@ -19,11 +19,8 @@ public class ItemCloudStaff extends TemplateItem {
 
     private ItemStack useCloudStaff(ItemStack itemstack, World world, PlayerEntity entityplayer) {
         if (!this.cloudsExist(world, entityplayer)) {
-
-            EntityMiniCloud c1 = new EntityMiniCloud(world, entityplayer, false);
-            EntityMiniCloud c2 = new EntityMiniCloud(world, entityplayer, true);
-            world.spawnEntity(c1);
-            world.spawnEntity(c2);
+            world.spawnEntity(new EntityMiniCloud(world, entityplayer, false));
+            world.spawnEntity(new EntityMiniCloud(world, entityplayer, true));
             itemstack.damage(1, null);
         }
 
@@ -37,9 +34,8 @@ public class ItemCloudStaff extends TemplateItem {
     private boolean cloudsExist(World world, PlayerEntity entityplayer) {
         List list = world.getEntities(entityplayer, entityplayer.boundingBox.expand(128.0, 128.0, 128.0));
 
-        for (Object o : list) {
-            Entity entity1 = (Entity) o;
-            if (entity1 instanceof EntityMiniCloud) {
+        for (Object entity : list) {
+            if (entity instanceof EntityMiniCloud) {
                 return true;
             }
         }

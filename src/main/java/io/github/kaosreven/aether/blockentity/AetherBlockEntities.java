@@ -2,6 +2,7 @@ package io.github.kaosreven.aether.blockentity;
 
 import io.github.kaosreven.aether.blockentity.block.BlockEntityEnchanter;
 import io.github.kaosreven.aether.blockentity.block.BlockEntityFreezer;
+import io.github.kaosreven.aether.blockentity.block.BlockEntityIncubator;
 import io.github.kaosreven.aether.blockentity.block.BlockEntityTreasureChest;
 import net.mine_diver.unsafeevents.listener.EventListener;
 import net.modificationstation.stationapi.api.event.block.entity.BlockEntityRegisterEvent;
@@ -18,6 +19,6 @@ public class AetherBlockEntities {
         event.register(MOD_ID.id("treasure_chest").toString(), BlockEntityTreasureChest.class);
         event.register(MOD_ID.id("freezer").toString(), BlockEntityFreezer.class);
         event.register(MOD_ID.id("enchanter").toString(), BlockEntityEnchanter.class);
-        //event.register(MOD_ID.id("incubator").toString(), BlockEntityIncubator.class);
+        event.register(MOD_ID.id("incubator").toString(), BlockEntityIncubator.class);
     }
 }

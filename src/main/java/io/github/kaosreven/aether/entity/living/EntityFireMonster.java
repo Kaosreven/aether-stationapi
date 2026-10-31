@@ -312,7 +312,7 @@ public class EntityFireMonster extends FlyingEntity implements BossLivingEntity,
         this.flameCount = nbttagcompound.getShort("FlameCount");
         this.ballCount = nbttagcompound.getShort("BallCount");
         this.chatLog = nbttagcompound.getShort("ChatLog");
-        this.rotary = (double) nbttagcompound.getFloat("Rotary");
+        this.rotary = nbttagcompound.getFloat("Rotary");
         this.gotTarget = nbttagcompound.getBoolean("GotTarget");
         this.speedness = 0.5 - (double) this.health / 70.0 * 0.2;
         if (nbttagcompound.getBoolean("IsCurrentBoss")) {

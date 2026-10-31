@@ -96,6 +96,7 @@ public class AetherBlocks {
         Pillar = (new Pillar(Identifier.of(MOD_ID, "pillar"))).setHardness(0.5F).setSoundGroup(Block.STONE_SOUND_GROUP).setTranslationKey(MOD_ID, "pillar");
         Freezer = (new Freezer(Identifier.of(MOD_ID, "freezer"))).setHardness(2.5F).setSoundGroup(Block.STONE_SOUND_GROUP).setTranslationKey(MOD_ID, "freezer");
         Enchanter = (new Enchanter(Identifier.of(MOD_ID, "enchanter"))).setTranslationKey(MOD_ID, "enchanter").setHardness(2.0F);
+        Incubator = (new Incubator(Identifier.of(MOD_ID, "incubator"))).setTranslationKey(MOD_ID, "incubator").setHardness(2.0F);
         TreasureChest = (new TreasureChest(Identifier.of(MOD_ID, "treasure_chest"))).setHardness(-1.0F).setSoundGroup(Block.STONE_SOUND_GROUP).setTranslationKey(MOD_ID, "treasure_chest");
         Chest = (new AetherChest(Identifier.of("aether_chest")).setHardness(2.5f).setTranslationKey(MOD_ID, "aether_chest").setSoundGroup(Block.WOOD_SOUND_GROUP).ignoreMetaUpdates());
         ChestMimic = (new MimicBlock(Identifier.of( "mimic"))).setHardness(2.0F).setSoundGroup(Block.WOOD_SOUND_GROUP).setTranslationKey(MOD_ID, "mimic");

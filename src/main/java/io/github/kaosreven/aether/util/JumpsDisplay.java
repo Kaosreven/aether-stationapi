@@ -1,6 +1,7 @@
 package io.github.kaosreven.aether.util;
 
 import io.github.kaosreven.aether.entity.living.EntityFlyingCow;
+import io.github.kaosreven.aether.entity.living.EntityMoa;
 import io.github.kaosreven.aether.entity.living.EntityPhyg;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.hud.InGameHud;
@@ -15,7 +16,10 @@ public class JumpsDisplay {
 
         int jumps;
         int maxJumps;
-        if (client.player.vehicle instanceof EntityPhyg phyg) {
+        if (client.player.vehicle instanceof EntityMoa moa) {
+            maxJumps = moa.colour.jumps;
+            jumps = maxJumps - moa.jrem;
+        } else if (client.player.vehicle instanceof EntityPhyg phyg) {
             maxJumps = phyg.jumps;
             jumps = maxJumps - phyg.jrem;
         } else if (client.player.vehicle instanceof EntityFlyingCow cow) {

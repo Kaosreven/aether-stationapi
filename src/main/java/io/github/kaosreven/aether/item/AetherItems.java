@@ -127,6 +127,7 @@ public class AetherItems {
 
         VictoryMedal = (new TemplateItem(Identifier.of(MOD_ID, "victory_medal"))).setMaxCount(10).setTranslationKey(MOD_ID, "victory_medal");
         Key = (new ItemAetherKey(Identifier.of(MOD_ID, "aether_key"))).setTranslationKey(MOD_ID, "aether_key");
+        LoreBook = (new ItemLoreBook(Identifier.of(MOD_ID, "lore_book"))).setTextureId(59).setTranslationKey(MOD_ID, "lore_book");
         MoaEgg = (new ItemMoaEgg(Identifier.of(MOD_ID, "moa_egg"))).setTranslationKey(MOD_ID, "moa_egg");
         AechorPetal = (new TemplateItem(Identifier.of(MOD_ID, "aechor_petal"))).setTranslationKey(MOD_ID, "aechor_petal");
         GoldenAmber = (new TemplateItem(Identifier.of(MOD_ID, "golden_amber"))).setTranslationKey(MOD_ID, "golden_amber");

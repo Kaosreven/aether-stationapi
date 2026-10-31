@@ -47,14 +47,10 @@ public class Trap extends TemplateTranslucentBlock {
                 int z = MathHelper.floor((double) k);
                 switch (world.getBlockMeta(i, j, k)) {
                     case 0:
-                        EntitySentry entitysentry = new EntitySentry(world);
-                        entitysentry.setPosition((double) x + 0.5, (double) y + 1.5, (double) z + 0.5);
-                        world.spawnEntity(entitysentry);
+                        world.spawnEntity(new EntitySentry(world, x + 0.5, y + 1.5, z + 0.5));
                         break;
                     case 1:
-                        EntityValkyrie entityvalk = new EntityValkyrie(world);
-                        entityvalk.setPosition((double) x + 0.5, (double) y + 1.5, (double) z + 0.5);
-                        world.spawnEntity(entityvalk);
+                        world.spawnEntity(new EntityValkyrie(world, x + 0.5, y + 1.5, z + 0.5, false));
                 }
 
                 world.setBlock(i, j, k, AetherBlocks.DungeonStone.id, world.getBlockMeta(i, j, k));

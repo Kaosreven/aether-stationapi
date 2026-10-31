@@ -17,6 +17,6 @@ public class ItemAgilityCape extends ItemCape {
 
     @Override
     public void onAccessoryRemoved(PlayerEntity player, ItemStack accessory) {
-        if (player.stepHeight > 1.0f) player.stepHeight *= 0.5f;
+        if (player.stepHeight >= 1.0f) player.stepHeight *= 0.5f;
     }
 }

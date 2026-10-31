@@ -57,7 +57,7 @@ public class EntityValkyrie extends EntityDungeonMob implements BossLivingEntity
         this.setBoundingBoxSpacing(0.8F, 1.6F);
         this.texture = "aether:stationapi/textures/mobs/valkyrie.png";
         this.teleTimer = this.random.nextInt(250);
-        this.health = 50;
+        this.health = this.maxHealth = 50;
         this.movementSpeed = 0.5F;
         this.timeLeft = 1200;
         this.attackStrength = 7;
@@ -70,15 +70,13 @@ public class EntityValkyrie extends EntityDungeonMob implements BossLivingEntity
         super(world);
         this.setBoundingBoxSpacing(0.8F, 1.6F);
         this.bossName = NameGen.gen();
-        this.texture = "aether:stationapi/textures/mobs/valkyrie.png";
         if (flag) {
-            this.texture = "aether:stationapi/textures/mobs/valkyrie2.png";
-            this.health = 500;
+            this.health = this.maxHealth = 500;
             this.boss = true;
         } else {
-            this.health = 50;
+            this.health = this.maxHealth = 50;
         }
-
+        updateTextureFromState();
         this.teleTimer = this.random.nextInt(250);
         this.movementSpeed = 0.5F;
         this.timeLeft = 1200;
@@ -388,7 +386,7 @@ public class EntityValkyrie extends EntityDungeonMob implements BossLivingEntity
         nbttagcompound.putInt("DungeonY", this.dungeonY);
         nbttagcompound.putInt("DungeonZ", this.dungeonZ);
         nbttagcompound.putInt("DungeonEntranceZ", this.dungeonEntranceZ);
-        nbttagcompound.put("SafePos", this.toNbtList(new double[]{this.safeX, this.safeY, this.safeZ}));
+        nbttagcompound.put("SafePos", this.toNbtList(this.safeX, this.safeY, this.safeZ));
         nbttagcompound.putBoolean("IsCurrentBoss", isBoss());
         if (isBoss()) {
             if (bossName != null) {

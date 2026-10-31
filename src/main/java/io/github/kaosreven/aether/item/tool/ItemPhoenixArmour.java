@@ -16,20 +16,13 @@ public class ItemPhoenixArmour extends ItemColouredArmour implements TickableInA
         if (player.isWet()) {
             itemInstance.damage(1, player);
             if (itemInstance.getDamage2() > itemInstance.getMaxDamage() - 2) {
-                switch (equipmentSlot) {
-                    case 0 -> {
-                        return new ItemStack(AetherItems.ObsidianHelm, 1);
-                    }
-                    case 1 -> {
-                        return new ItemStack(AetherItems.ObsidianBody, 1);
-                    }
-                    case 2 -> {
-                        return new ItemStack(AetherItems.ObsidianLegs, 1);
-                    }
-                    case 3 -> {
-                        return new ItemStack(AetherItems.ObsidianBoots, 1);
-                    }
-                }
+                return switch (equipmentSlot) {
+                    case 0 -> new ItemStack(AetherItems.ObsidianHelm, 1);
+                    case 1 -> new ItemStack(AetherItems.ObsidianBody, 1);
+                    case 2 -> new ItemStack(AetherItems.ObsidianLegs, 1);
+                    case 3 -> new ItemStack(AetherItems.ObsidianBoots, 1);
+                    default -> null;
+                };
             }
         }
 

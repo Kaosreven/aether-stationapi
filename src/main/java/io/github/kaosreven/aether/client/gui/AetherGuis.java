@@ -2,6 +2,7 @@ package io.github.kaosreven.aether.client.gui;
 
 import io.github.kaosreven.aether.blockentity.block.BlockEntityEnchanter;
 import io.github.kaosreven.aether.blockentity.block.BlockEntityFreezer;
+import io.github.kaosreven.aether.blockentity.block.BlockEntityIncubator;
 import io.github.kaosreven.aether.blockentity.block.BlockEntityTreasureChest;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
@@ -29,7 +30,7 @@ public class AetherGuis {
         Registry.register(registry, Identifier.of(MOD_ID, "treasure_chest"), new GuiHandler((GuiHandler.ScreenFactoryNoMessage) this::openTreasureChest, BlockEntityTreasureChest::new));
         Registry.register(registry, Identifier.of(MOD_ID, "freezer"), new GuiHandler((GuiHandler.ScreenFactoryNoMessage) this::openFreezer, BlockEntityFreezer::new));
         Registry.register(registry, Identifier.of(MOD_ID, "enchanter"), new GuiHandler((GuiHandler.ScreenFactoryNoMessage) this::openEnchanter, BlockEntityEnchanter::new));
-        //Registry.register(registry, Identifier.of(MOD_ID, "incubator"), new GuiHandler((GuiHandler.ScreenFactoryNoMessage) this::openIncubator, BlockEntityIncubator::new));
+        Registry.register(registry, Identifier.of(MOD_ID, "incubator"), new GuiHandler((GuiHandler.ScreenFactoryNoMessage) this::openIncubator, BlockEntityIncubator::new));
     }
 
     @Environment(EnvType.CLIENT)
@@ -47,10 +48,8 @@ public class AetherGuis {
         return new GuiEnchanter(player.inventory, (BlockEntityEnchanter) inventoryBase);
     }
 
-    /*
     @Environment(EnvType.CLIENT)
     public HandledScreen openIncubator(PlayerEntity player, Inventory inventoryBase) {
         return new GuiIncubator(player.inventory, (BlockEntityIncubator) inventoryBase);
     }
-     */
 }

@@ -78,6 +78,7 @@ public class AetherAchievements {
         defeatSilver = create("defeatSilver", new ItemStack(AetherItems.Key, 1, 1),0,4, enterAether);
         defeatGold = create("defeatGold", new ItemStack(AetherItems.Key, 1, 2),2,3, enterAether);
         enchanter = create("enchanter", new ItemStack(AetherBlocks.Enchanter),2, 1, enterAether);
+        incubator = create("incubator", new ItemStack(AetherBlocks.Incubator),2, -1, enterAether);
         blueCloud = create("blueCloud", new ItemStack(AetherBlocks.Aercloud, 1, 1),-2,-1, enterAether);
         gravTools = create("gravTools", new ItemStack(AetherItems.PickGravitite),-1, -3, enterAether);
         flyingPig = create("flyingPig", new ItemStack(Item.SADDLE),-2,1, enterAether);

@@ -80,6 +80,8 @@ public class AetherTextures {
         AetherBlocks.QuicksoilGlass.textureId = terrain.addTexture(of(MOD_ID, "block/QuicksoilGlass")).index;
         TreasureChest.sideTexture = terrain.addTexture(of(MOD_ID, "block/LockedChestSide")).index;
         AetherBlocks.TreasureChest.textureId = terrain.addTexture(of(MOD_ID, "block/LockedChestFront")).index;
+        AetherBlocks.Incubator.textureId = terrain.addTexture(of(MOD_ID, "block/IncubatorTop")).index;
+        Incubator.sideTexture = terrain.addTexture(of(MOD_ID, "block/IncubatorSide")).index;
     }
 
     public static void setItemTextures(ExpandableAtlas items) {

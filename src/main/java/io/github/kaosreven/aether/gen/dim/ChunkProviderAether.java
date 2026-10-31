@@ -84,7 +84,7 @@ public class ChunkProviderAether implements ChunkSource {
                                     int z = zSubChunk + zSection * 8;
 
                                     // Direct section access - work with Block instance directly
-                                    var section = chunk.getOrCreateSection(y, false);
+                                    var section = chunk.getOrCreateSection(y, true);
                                     if (section != null) {
                                         section.setBlockState(x, y & 15, z, AetherBlocks.Holystone.getDefaultState());
                                     }
@@ -196,8 +196,8 @@ public class ChunkProviderAether implements ChunkSource {
         int worldX = chunkX << 4;
         int worldZ = chunkZ << 4;
         random.setSeed(world.getSeed());
-        long seedModifier1 = random.nextLong() / 2L * 2L + 1L;
-        long seedModifier2 = random.nextLong() / 2L * 2L + 1L;
+        long seedModifier1 = random.nextLong() | 1L;
+        long seedModifier2 = random.nextLong() | 1L;
         random.setSeed((long) chunkX * seedModifier1 + (long) chunkZ * seedModifier2 ^ world.getSeed());
         double treeNoiseScale = 0.5;
 

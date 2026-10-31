@@ -11,11 +11,15 @@ public class ItemGloves extends ItemMoreArmor implements HasCustomRenderer {
     AccessoryRenderer renderer;
 
     public ItemGloves(Identifier i, int j, String path, int l, int m) {
-        super(i, j, path, l, m);
+        super(i, j, path, l, m, true);
     }
 
     public ItemGloves(Identifier i, int j, String path, int l, int m, boolean flag) {
         super(i, j, path, l, m, flag);
+    }
+
+    public ItemGloves(Identifier i, int j, String path, int l) {
+        super(i, j, path, l, 16777215, false);
     }
 
     @Override

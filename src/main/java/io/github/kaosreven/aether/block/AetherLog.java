@@ -1,12 +1,17 @@
 package io.github.kaosreven.aether.block;
 
 import io.github.kaosreven.aether.item.AetherItems;
+import net.minecraft.block.Block;
 import net.minecraft.block.material.Material;
 import net.minecraft.entity.ItemEntity;
 import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.world.World;
 import net.modificationstation.stationapi.api.block.MetaNamedBlockItemProvider;
+import net.modificationstation.stationapi.api.registry.BlockRegistry;
+import net.modificationstation.stationapi.api.registry.ItemRegistry;
+import net.modificationstation.stationapi.api.tag.TagKey;
 import net.modificationstation.stationapi.api.template.block.TemplateBlock;
 import net.modificationstation.stationapi.api.util.Identifier;
 
@@ -46,10 +51,10 @@ public class AetherLog extends TemplateBlock implements MetaNamedBlockItemProvid
                     count = 2;
                 }
                  */
-
+                TagKey<Item> goldenAmberHarvester = TagKey.of(ItemRegistry.INSTANCE.getKey(), Identifier.of("aether:golden_amber_harvesters"));
                 ItemStack heldItem = player.inventory.main[player.inventory.selectedSlot];
 
-                if (heldItem != null && (heldItem.itemId == AetherItems.AxeZanite.id || heldItem.itemId == AetherItems.AxeGravitite.id)) {
+                if (heldItem != null && heldItem.isIn(goldenAmberHarvester)) {
                     if (meta > 1) {
                         ItemStack stack = new ItemStack(AetherItems.GoldenAmber.id, rand.nextInt(1,4), 0);
                         world.spawnEntity(new ItemEntity(world, x, y, z, stack));

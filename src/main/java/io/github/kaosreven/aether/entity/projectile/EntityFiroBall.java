@@ -16,7 +16,7 @@ import net.modificationstation.stationapi.api.server.entity.HasTrackingParameter
 import net.modificationstation.stationapi.api.util.Identifier;
 import net.modificationstation.stationapi.api.util.TriState;
 
-import static io.github.kaosreven.aether.item.AetherItems.MOD_ID;
+import static io.github.kaosreven.aether.entity.AetherEntities.MOD_ID;
 
 @HasTrackingParameters(trackingDistance = 50, sendVelocity = TriState.TRUE, updatePeriod = 1)
 public class EntityFiroBall extends FlyingEntity implements EntitySpawnDataProvider {

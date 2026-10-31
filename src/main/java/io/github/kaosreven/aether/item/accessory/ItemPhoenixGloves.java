@@ -11,8 +11,8 @@ import net.minecraft.item.ItemStack;
 import net.modificationstation.stationapi.api.util.Identifier;
 
 public class ItemPhoenixGloves extends ItemGloves {
-    public ItemPhoenixGloves(Identifier i, int j, String path, int l, int m, boolean b) {
-        super(i, j, path, l, m, b);
+    public ItemPhoenixGloves(Identifier i, int j, String path, int l) {
+        super(i, j, path, l, 16742144, false);
     }
 
     private boolean phoenixArmour(PlayerEntity player, int slot) {
@@ -21,7 +21,6 @@ public class ItemPhoenixGloves extends ItemGloves {
                 return true;
             }
         }
-        colouriseRender = false;
         return false;
     }
 

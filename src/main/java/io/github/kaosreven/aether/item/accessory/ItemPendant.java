@@ -14,6 +14,10 @@ public class ItemPendant extends ItemMoreArmor implements HasCustomRenderer {
         super(i, j, path, l, m);
     }
 
+    public ItemPendant(Identifier i, int j, String path, int l) {
+        super(i, j, path, l, 16777215, false);
+    }
+
     @Override
     public AccessoryRenderer getRenderer() {
         return renderer;
@@ -21,6 +25,9 @@ public class ItemPendant extends ItemMoreArmor implements HasCustomRenderer {
 
     @Override
     public void constructRenderer() {
-        renderer = new NecklaceRenderer(texture).withColor(new Color(colour));
+        if (colouriseRender)
+            renderer = new NecklaceRenderer(texture).withColor(new Color(colour));
+        else
+            renderer = new NecklaceRenderer(texture);
     }
 }

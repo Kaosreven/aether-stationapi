@@ -12,12 +12,16 @@ public class ItemCape extends ItemMoreArmor implements HasCustomRenderer {
 
     private ConfigurableRenderer renderer;
 
-    public ItemCape(Identifier i, int j, String path, int l) {
-        super(i, j, path, l);
+    public ItemCape(Identifier i, int j, String path, int l, int m) {
+        super(i, j, path, l, m, true);
     }
 
-    public ItemCape(Identifier i, int j, String path, int l, int m) {
-        super(i, j, path, l, m);
+    public ItemCape(Identifier i, int j, String path, int l, int m, boolean flag) {
+        super(i, j, path, l, m, flag);
+    }
+
+    public ItemCape(Identifier i, int j, String path, int l) {
+        super(i, j, path, l, 16777215, false);
     }
 
     @Override
@@ -27,6 +31,9 @@ public class ItemCape extends ItemMoreArmor implements HasCustomRenderer {
 
     @Override
     public void constructRenderer() {
-        renderer = new CapeRenderer(texture).withColor(new Color(colour));
+        if (colouriseRender)
+            renderer = new CapeRenderer(texture).withColor(new Color(colour));
+        else
+            renderer = new CapeRenderer(texture);
     }
 }

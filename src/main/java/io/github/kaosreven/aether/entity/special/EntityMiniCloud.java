@@ -1,6 +1,7 @@
 package io.github.kaosreven.aether.entity.special;
 
 import io.github.kaosreven.aether.entity.projectile.EntityFiroBall;
+import io.github.kaosreven.aether.util.AetherMpUtils;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.FlyingEntity;
 import net.minecraft.entity.LivingEntity;
@@ -153,6 +154,9 @@ public class EntityMiniCloud extends FlyingEntity implements MobSpawnDataProvide
 
                         eh.smacked = true;
                         this.world.playSound(this, "aether:mobs.zephyr.zephyrshoot", this.getSoundVolume(), (this.random.nextFloat() - this.random.nextFloat()) * 0.2f + 1.0f);
+                        if (AetherMpUtils.isEnvServ()) {
+                            AetherMpUtils.soundPacket(this.world, (int) this.x, (int) this.y, (int) this.z, "aether:mobs.zephyr.zephyrshoot", this.getSoundVolume(), (this.random.nextFloat() - this.random.nextFloat()) * 0.2f + 1.0f);
+                        }
                         this.shotTimer = 40;
                     }
                 } else {

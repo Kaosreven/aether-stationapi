@@ -7,15 +7,15 @@ import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.nbt.NbtCompound;
 import net.minecraft.world.World;
+import net.modificationstation.stationapi.api.server.entity.EntitySpawnDataProvider;
 import net.modificationstation.stationapi.api.server.entity.HasTrackingParameters;
-import net.modificationstation.stationapi.api.server.entity.MobSpawnDataProvider;
 import net.modificationstation.stationapi.api.util.Identifier;
 import net.modificationstation.stationapi.api.util.TriState;
 
-import static io.github.kaosreven.aether.item.AetherItems.MOD_ID;
+import static io.github.kaosreven.aether.entity.AetherEntities.MOD_ID;
 
 @HasTrackingParameters(trackingDistance = 50, sendVelocity = TriState.TRUE, updatePeriod = 1)
-public class EntityHomeShot extends FlyingEntity implements MobSpawnDataProvider {
+public class EntityHomeShot extends FlyingEntity implements EntitySpawnDataProvider {
     public float[] sinage;
     public LivingEntity target;
     public boolean firstRun;

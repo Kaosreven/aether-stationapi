@@ -1,6 +1,7 @@
 package io.github.kaosreven.aether.item.tool;
 
 import io.github.kaosreven.aether.entity.projectile.EntityLightningKnife;
+import io.github.kaosreven.aether.util.AetherMpUtils;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.world.World;
@@ -15,8 +16,8 @@ public class ItemLightningKnife extends TemplateItem {
 
     public ItemStack use(ItemStack itemstack, World world, PlayerEntity entityplayer) {
         --itemstack.count;
+        world.playSound(entityplayer, "aether:other.dartshooter.shootdart", 2.0F, 1.0F / (random.nextFloat() * 0.4F + 0.8F));
         if (!world.isRemote) {
-            world.playSound(entityplayer, "aether:other.dartshooter.shootdart", 2.0F, 1.0F / (random.nextFloat() * 0.4F + 0.8F));
             world.spawnEntity(new EntityLightningKnife(world, entityplayer));
         }
 

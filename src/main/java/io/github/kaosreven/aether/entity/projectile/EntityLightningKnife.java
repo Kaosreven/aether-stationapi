@@ -170,7 +170,6 @@ public class EntityLightningKnife extends Entity implements EntitySpawnDataProvi
         }
 
         if (movingobjectposition != null) {
-            if (!this.world.isRemote) {
                 LightningEntity entitylightningbolt;
                 int x;
                 int y;
@@ -190,7 +189,6 @@ public class EntityLightningKnife extends Entity implements EntitySpawnDataProvi
                 }
                 entitylightningbolt.setPositionAndAnglesKeepPrevAngles(x, y, z, this.yaw, 0.0F);
                 this.world.spawnEntity(entitylightningbolt);
-            }
 
             for (int px = 0; px < 8; ++px) {
                 this.world.addParticle("largesmoke", this.x, this.y, this.z, 0.0, 0.0, 0.0);

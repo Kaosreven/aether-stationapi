@@ -375,6 +375,9 @@ public class EntitySlider extends FlyingEntity implements BossLivingEntity, MobS
             boolean flag = entity.damage(this, 6);
             if (flag && entity instanceof LivingEntity ek) {
                 this.world.playSound(this, "aether:bosses.slider.slidercollide", 2.5F, 1.0F / (this.random.nextFloat() * 0.2F + 0.9F));
+                if (AetherMpUtils.isEnvServ()) {
+                    AetherMpUtils.soundPacket(this.world, (int) this.x, (int) this.y, (int) this.z, "aether:bosses.slider.slidercollide", 2.5F, 1.0F / (this.random.nextFloat() * 0.2F + 0.9F));
+                }
                 if (entity instanceof MobEntity || entity instanceof PlayerEntity) {
                     ek.velocityY += 0.35;
                     ek.velocityX *= 2.0;

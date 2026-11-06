@@ -17,10 +17,7 @@ import static io.github.kaosreven.aether.entity.AetherEntities.MOD_ID;
 public class EntitySentry extends EntityDungeonMob implements MobSpawnDataProvider {
     private static final int TRACKED_ACTIVE = 16;
 
-    public float field_100021_a;
-    public float field_100020_b;
     private int jcount;
-    public int size;
     public int counter;
     public int lostyou;
     public boolean active;
@@ -28,27 +25,13 @@ public class EntitySentry extends EntityDungeonMob implements MobSpawnDataProvid
     public EntitySentry(World world) {
         super(world);
         this.texture = "aether:stationapi/textures/mobs/Sentry.png";
-        this.size = 2;
         this.standingEyeHeight = 0.0F;
-        this.movementSpeed = 1.0F;
-        this.field_100021_a = 1.0F;
-        this.field_100020_b = 1.0F;
         this.jcount = this.random.nextInt(20) + 10;
-        this.func_100019_e(this.size);
-    }
-
-    public EntitySentry(World world, double x, double y, double z) {
-        super(world);
-        this.texture = "aether:stationapi/textures/mobs/Sentry.png";
-        this.size = 2;
-        this.standingEyeHeight = 0.0F;
         this.movementSpeed = 1.0F;
-        this.field_100021_a = 1.0F;
-        this.field_100020_b = 1.0F;
-        this.jcount = this.random.nextInt(20) + 10;
-        this.func_100019_e(this.size);
+        this.health = 10;
+        this.width = 0.85F;
+        this.height = 0.85F;
         this.yaw = (float) this.random.nextInt(4) * 1.5707965F;
-        this.setPosition(x, y, z);
     }
 
     public void initDataTracker() {
@@ -68,16 +51,8 @@ public class EntitySentry extends EntityDungeonMob implements MobSpawnDataProvid
                 : "aether:stationapi/textures/mobs/Sentry.png";
     }
 
-    public void func_100019_e(int i) {
-        this.health = 10;
-        this.width = 0.85F;
-        this.height = 0.85F;
-        this.setPosition(this.x, this.y, this.z);
-    }
-
     public void writeNbt(NbtCompound nbttagcompound) {
         super.writeNbt(nbttagcompound);
-        nbttagcompound.putInt("Size", this.size - 1);
         nbttagcompound.putInt("LostYou", this.lostyou);
         nbttagcompound.putInt("Counter", this.counter);
         nbttagcompound.putBoolean("Active", this.active);
@@ -85,7 +60,6 @@ public class EntitySentry extends EntityDungeonMob implements MobSpawnDataProvid
 
     public void readNbt(NbtCompound nbttagcompound) {
         super.readNbt(nbttagcompound);
-        this.size = nbttagcompound.getInt("Size") + 1;
         this.lostyou = nbttagcompound.getInt("LostYou");
         this.counter = nbttagcompound.getInt("Counter");
         this.active = nbttagcompound.getBoolean("Active");

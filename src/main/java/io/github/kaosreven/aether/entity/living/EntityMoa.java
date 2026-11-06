@@ -68,7 +68,7 @@ public class EntityMoa extends EntityAetherAnimal implements MobSpawnDataProvide
         this.colour = moaColour;
         this.texture = this.colour.getTexture(this.saddled);
         this.setBoundingBoxSpacing(1.0F, 2.0F);
-        this.health = 40;
+        this.health = this.maxHealth = 40;
         syncMoaState();
     }
 

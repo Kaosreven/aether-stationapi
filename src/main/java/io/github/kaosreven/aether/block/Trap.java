@@ -38,6 +38,7 @@ public class Trap extends TemplateTranslucentBlock {
         return 1;
     }
 
+    @Override
     public void onSteppedOn(World world, int i, int j, int k, Entity entity) {
         if (!world.isRemote) {
             if (entity instanceof PlayerEntity) {
@@ -47,10 +48,13 @@ public class Trap extends TemplateTranslucentBlock {
                 int z = MathHelper.floor((double) k);
                 switch (world.getBlockMeta(i, j, k)) {
                     case 0:
-                        world.spawnEntity(new EntitySentry(world, x + 0.5, y + 1.5, z + 0.5));
+                        EntitySentry entitysentry = new EntitySentry(world);
+                        entitysentry.setPosition(x + 0.5, y + 1.5, z + 0.5);
+                        world.spawnEntity(entitysentry);
                         break;
                     case 1:
-                        world.spawnEntity(new EntityValkyrie(world, x + 0.5, y + 1.5, z + 0.5, false));
+                        EntityValkyrie entityvalk = new EntityValkyrie(world, (double) x + 0.5, (double) y + 1.5, (double) z + 0.5, false);
+                        world.spawnEntity(entityvalk);
                 }
 
                 world.setBlock(i, j, k, AetherBlocks.DungeonStone.id, world.getBlockMeta(i, j, k));

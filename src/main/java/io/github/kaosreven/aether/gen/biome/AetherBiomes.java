@@ -24,7 +24,7 @@ public class AetherBiomes {
 
     @EventListener
     public void registerBiomes(BiomeRegisterEvent event) {
-        AETHER = BiomeBuilder.start("aether")
+        AETHER = BiomeBuilder.start("Aether")
                 .grassAndLeavesColor(353825)
                 .precipitation(false)
                 .passiveEntity(EntitySwet.class, raritySwet)

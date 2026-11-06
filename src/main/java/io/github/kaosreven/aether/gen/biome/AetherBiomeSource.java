@@ -1,18 +1,24 @@
 package io.github.kaosreven.aether.gen.biome;
 
 import net.minecraft.util.math.ChunkPos;
+import net.minecraft.util.math.noise.OctaveSimplexNoiseSampler;
+import net.minecraft.world.World;
 import net.minecraft.world.biome.Biome;
 import net.minecraft.world.biome.source.BiomeSource;
 import java.util.Arrays;
+import java.util.Random;
 
 public class AetherBiomeSource extends BiomeSource {
 
     private final Biome biome;
     private final double temperature;
 
-    public AetherBiomeSource(double temperature) {
+
+    public AetherBiomeSource(double temperature, World world) {
         biome = AetherBiomes.AETHER;
         this.temperature = temperature;
+        //Take it you Buildcraft Combustion Engine and never bother me again
+        this.temperatureSampler = new OctaveSimplexNoiseSampler(new Random(world.getSeed() * 9871L), 4);
     }
 
     @Override
@@ -32,21 +38,23 @@ public class AetherBiomeSource extends BiomeSource {
 
     @Override
     public double[] create(double[] temperatures, int x, int z, int xSize, int zSize) {
-        if (temperatures == null || temperatures.length < xSize * zSize)
-            temperatures = new double[xSize * zSize];
-        Arrays.fill(temperatures, 0, xSize * zSize, 1.0D);
+        int totalSize = xSize * zSize;
+        if (temperatures == null || temperatures.length < totalSize)
+            temperatures = new double[totalSize];
+        Arrays.fill(temperatures, 0, totalSize, temperature);
         return temperatures;
     }
 
     @Override
     public Biome[] getBiomesInArea(Biome[] biomes, int x, int z, int xSize, int zSize) {
-        if (biomes == null || biomes.length < xSize * zSize)
-            biomes = new Biome[xSize * zSize];
-        if (temperatureMap == null || temperatureMap.length < xSize * zSize) {
-            temperatureMap = new double[xSize * zSize];
-            downfallMap = new double[xSize * zSize];
+        int totalSize = xSize * zSize;
+        if (biomes == null || biomes.length < totalSize)
+            biomes = new Biome[totalSize];
+        if (temperatureMap == null || temperatureMap.length < totalSize) {
+            temperatureMap = new double[totalSize];
+            downfallMap = new double[totalSize];
         }
-        Arrays.fill(biomes, 0, xSize * zSize, biome);
+        Arrays.fill(biomes, 0, totalSize, biome);
         return biomes;
     }
 }

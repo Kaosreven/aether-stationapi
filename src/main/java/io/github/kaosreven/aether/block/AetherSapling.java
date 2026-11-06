@@ -2,17 +2,14 @@ package io.github.kaosreven.aether.block;
 
 import io.github.kaosreven.aether.gen.feature.AetherGenGoldenOak;
 import io.github.kaosreven.aether.gen.feature.AetherGenSkyroot;
-import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.item.Item;
-import net.minecraft.item.ItemStack;
 import net.minecraft.world.World;
 import net.minecraft.world.gen.feature.Feature;
-import net.modificationstation.stationapi.api.template.block.TemplatePlantBlock;
+import net.modificationstation.stationapi.api.template.block.TemplateSaplingBlock;
 import net.modificationstation.stationapi.api.util.Identifier;
 
 import java.util.Random;
 
-public class AetherSapling extends TemplatePlantBlock {
+public class AetherSapling extends TemplateSaplingBlock {
     public static int sprSkyroot;
     public static int sprGoldenOak;
     public boolean golden;
@@ -20,54 +17,20 @@ public class AetherSapling extends TemplatePlantBlock {
     public AetherSapling(Identifier identifier, boolean golden) {
         super(identifier, golden ? sprGoldenOak : sprSkyroot);
         this.golden = golden;
-        float f = 0.4F;
-        this.setBoundingBox(0.5F - f, 0.0F, 0.5F - f, 0.5F + f, f * 2.0F, 0.5F + f);
     }
 
-    public void onTick(World world, int i, int j, int k, Random random) {
-        if (!world.isRemote) {
-            super.onTick(world, i, j, k, random);
-            if (world.getLightLevel(i, j + 1, k) >= 9 && random.nextInt(30) == 0) {
-                this.growTree(world, i, j, k, random);
-            }
-
-        }
-    }
-
+    @Override
     public int getTexture(int i, int j) {
         return golden ? sprGoldenOak : sprSkyroot;
     }
 
-    public boolean canPlaceAt(World world, int i, int j, int k) {
-        return super.canPlaceAt(world, i, j, k) && this.canPlantOnTop(world.getBlockId(i, j - 1, k));
-    }
-
+    @Override
     protected boolean canPlantOnTop(int i) {
         return i == AetherBlocks.Grass.id || i == AetherBlocks.Dirt.id;
     }
 
-    public boolean onUse(World world, int i, int j, int k, PlayerEntity entityPlayer) {
-        if (world.isRemote) {
-            return false;
-        } else if (entityPlayer == null) {
-            return false;
-        } else {
-            ItemStack itemStack = entityPlayer.getHand();
-            if (itemStack == null) {
-                return false;
-            } else if (itemStack.itemId != Item.DYE.id) {
-                return false;
-            } else if (itemStack.getDamage() != 15) {
-                return false;
-            } else {
-                this.growTree(world, i, j, k, world.random);
-                --itemStack.count;
-                return true;
-            }
-        }
-    }
-
-    public void growTree(World world, int i, int j, int k, Random random) {
+    @Override
+    public void generate(World world, int i, int j, int k, Random random) {
         world.setBlockWithoutNotifyingNeighbors(i, j, k, 0);
         Feature obj;
         if (this.id == AetherBlocks.GoldenOakSapling.id) {

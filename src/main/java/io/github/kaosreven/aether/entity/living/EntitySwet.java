@@ -60,34 +60,6 @@ public class EntitySwet extends EntityAetherAnimal implements MobSpawnDataProvid
         this.ticker = 0;
     }
 
-    public EntitySwet(World world, int color) {
-        super(world);
-        this.health = 25;
-        if (!this.textureSet) {
-            if (color == 0) {
-                this.textureNum = 2;
-            } else {
-                this.textureNum = 1;
-            }
-            this.textureSet = true;
-        }
-
-        if (this.textureNum == 1) {
-            this.texture = "aether:stationapi/textures/mobs/swets.png";
-            this.movementSpeed = 1.5F;
-        } else {
-            this.texture = "aether:stationapi/textures/mobs/goldswets.png";
-            this.movementSpeed = 3.0F;
-        }
-
-        this.setBoundingBoxSpacing(0.8F, 0.8F);
-        this.setPosition(this.x, this.y, this.z);
-        this.hops = 0;
-        this.gotrider = false;
-        this.flutter = 0;
-        this.ticker = 0;
-    }
-
     public void tickRiding() {
         super.tickRiding();
         if (this.passenger != null && this.kickoff) {

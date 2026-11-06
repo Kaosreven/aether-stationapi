@@ -16,10 +16,6 @@ public class ItemRegenerationStone extends ItemMoreArmor {
             int maxHealth = 20 + ((PlayerExtraHP) player).getExtraHP();
             if (player.health < maxHealth) {
                 player.health += 1;
-                itemInstance.damage(1, player);
-                if (itemInstance.getDamage2() > itemInstance.getMaxDamage() - 2) {
-                    itemInstance = null;
-                }
             }
         }
 

@@ -63,103 +63,98 @@ public class AetherLeaves extends TemplateTranslucentBlock {
 
     }
 
+    @Override
     public void onTick(World world, int x, int y, int z, Random random) {
-        if (!world.isRemote) {
-            int var6 = world.getBlockMeta(x, y, z);
-            if ((var6 & 8) != 0) {
-                byte var7 = 4;
-                int var8 = var7 + 1;
-                byte var9 = 32;
-                int var10 = var9 * var9;
-                int var11 = var9 / 2;
-                if (this.blocks == null) {
-                    this.blocks = new int[var9 * var9 * var9];
-                }
+        if (world.isRemote) {
+            return;
+        }
 
-                int var12;
-                if (world.isRegionLoaded(x - var8, y - var8, z - var8, x + var8, y + var8, z + var8)) {
-                    var12 = -var7;
+        int meta = world.getBlockMeta(x, y, z);
+        if ((meta & 8) == 0) {
+            return;
+        }
 
-                    label111:
-                    while (true) {
-                        int var13;
-                        int var14;
-                        int var15;
-                        if (var12 > var7) {
-                            var12 = 1;
+        final int RADIUS = 4;
+        final int BOUND_SIZE = RADIUS + 1;
+        final int SIDE = 32;
+        final int SIDE_SQUARED = SIDE * SIDE;
+        final int HALF_SIDE = SIDE / 2;
 
-                            while (true) {
-                                if (var12 > 4) {
-                                    break label111;
-                                }
+        // Index strides for fast neighbor access
+        final int STEP_X = SIDE_SQUARED;
+        final int STEP_Y = SIDE;
+        final int STEP_Z = 1;
 
-                                for (var13 = -var7; var13 <= var7; ++var13) {
-                                    for (var14 = -var7; var14 <= var7; ++var14) {
-                                        for (var15 = -var7; var15 <= var7; ++var15) {
-                                            if (this.blocks[(var13 + var11) * var10 + (var14 + var11) * var9 + var15 + var11] == var12 - 1) {
-                                                if (this.blocks[(var13 + var11 - 1) * var10 + (var14 + var11) * var9 + var15 + var11] == -2) {
-                                                    this.blocks[(var13 + var11 - 1) * var10 + (var14 + var11) * var9 + var15 + var11] = var12;
-                                                }
+        if (this.blocks == null) {
+            this.blocks = new int[SIDE * SIDE * SIDE];
+        }
 
-                                                if (this.blocks[(var13 + var11 + 1) * var10 + (var14 + var11) * var9 + var15 + var11] == -2) {
-                                                    this.blocks[(var13 + var11 + 1) * var10 + (var14 + var11) * var9 + var15 + var11] = var12;
-                                                }
+        // Ensure the region is fully loaded before processing
+        if (!world.isRegionLoaded(x - BOUND_SIZE, y - BOUND_SIZE, z - BOUND_SIZE,
+                x + BOUND_SIZE, y + BOUND_SIZE, z + BOUND_SIZE)) {
+            return;
+        }
 
-                                                if (this.blocks[(var13 + var11) * var10 + (var14 + var11 - 1) * var9 + var15 + var11] == -2) {
-                                                    this.blocks[(var13 + var11) * var10 + (var14 + var11 - 1) * var9 + var15 + var11] = var12;
-                                                }
+        // 1. Populate the local 3D grid with block states
+        for (int dx = -RADIUS; dx <= RADIUS; ++dx) {
+            for (int dy = -RADIUS; dy <= RADIUS; ++dy) {
+                for (int dz = -RADIUS; dz <= RADIUS; ++dz) {
+                    int blockId = world.getBlockId(x + dx, y + dy, z + dz);
+                    int idx = (dx + HALF_SIDE) * STEP_X + (dy + HALF_SIDE) * STEP_Y + (dz + HALF_SIDE);
 
-                                                if (this.blocks[(var13 + var11) * var10 + (var14 + var11 + 1) * var9 + var15 + var11] == -2) {
-                                                    this.blocks[(var13 + var11) * var10 + (var14 + var11 + 1) * var9 + var15 + var11] = var12;
-                                                }
-
-                                                if (this.blocks[(var13 + var11) * var10 + (var14 + var11) * var9 + (var15 + var11 - 1)] == -2) {
-                                                    this.blocks[(var13 + var11) * var10 + (var14 + var11) * var9 + (var15 + var11 - 1)] = var12;
-                                                }
-
-                                                if (this.blocks[(var13 + var11) * var10 + (var14 + var11) * var9 + var15 + var11 + 1] == -2) {
-                                                    this.blocks[(var13 + var11) * var10 + (var14 + var11) * var9 + var15 + var11 + 1] = var12;
-                                                }
-                                            }
-                                        }
-                                    }
-                                }
-
-                                ++var12;
-                            }
-                        }
-
-                        for (var13 = -var7; var13 <= var7; ++var13) {
-                            for (var14 = -var7; var14 <= var7; ++var14) {
-                                var15 = world.getBlockId(x + var12, y + var13, z + var14);
-                                if (var15 == AetherBlocks.Log.id) {
-                                    this.blocks[(var12 + var11) * var10 + (var13 + var11) * var9 + var14 + var11] = 0;
-                                } else if (var15 == AetherBlocks.SkyrootLeaves.id || var15 == AetherBlocks.GoldenOakLeaves.id) {
-                                    this.blocks[(var12 + var11) * var10 + (var13 + var11) * var9 + var14 + var11] = -2;
-                                } else {
-                                    this.blocks[(var12 + var11) * var10 + (var13 + var11) * var9 + var14 + var11] = -1;
-                                }
-                            }
-                        }
-
-                        ++var12;
+                    if (blockId == AetherBlocks.Log.id) {
+                        this.blocks[idx] = 0; // Source log distance = 0
+                    } else if (blockId == AetherBlocks.SkyrootLeaves.id || blockId == AetherBlocks.GoldenOakLeaves.id) {
+                        this.blocks[idx] = -2; // Unprocessed leaves
+                    } else {
+                        this.blocks[idx] = -1; // Solid block / air / other
                     }
                 }
+            }
+        }
 
-                var12 = this.blocks[var11 * var10 + var11 * var9 + var11];
-                if (var12 >= 0) {
-                    world.setBlockMetaWithoutNotifyingNeighbors(x, y, z, var6 & -9);
-                } else {
-                    this.dropAndRemove(world, x, y, z);
+        // 2. Flood-fill distance propagation (Breadth-First Search simulation)
+        for (int dist = 1; dist <= 4; ++dist) {
+            int targetDist = dist - 1;
+
+            for (int dx = -RADIUS; dx <= RADIUS; ++dx) {
+                for (int dy = -RADIUS; dy <= RADIUS; ++dy) {
+                    for (int dz = -RADIUS; dz <= RADIUS; ++dz) {
+                        int baseIdx = (dx + HALF_SIDE) * STEP_X + (dy + HALF_SIDE) * STEP_Y + (dz + HALF_SIDE);
+
+                        if (this.blocks[baseIdx] == targetDist) {
+                            // Check all 6 neighbors using fast stride offsets instead of full recalculation
+                            int idxXNeg = baseIdx - STEP_X;
+                            if (this.blocks[idxXNeg] == -2) this.blocks[idxXNeg] = dist;
+
+                            int idxXPos = baseIdx + STEP_X;
+                            if (this.blocks[idxXPos] == -2) this.blocks[idxXPos] = dist;
+
+                            int idxYNeg = baseIdx - STEP_Y;
+                            if (this.blocks[idxYNeg] == -2) this.blocks[idxYNeg] = dist;
+
+                            int idxYPos = baseIdx + STEP_Y;
+                            if (this.blocks[idxYPos] == -2) this.blocks[idxYPos] = dist;
+
+                            int idxZNeg = baseIdx - STEP_Z;
+                            if (this.blocks[idxZNeg] == -2) this.blocks[idxZNeg] = dist;
+
+                            int idxZPos = baseIdx + STEP_Z;
+                            if (this.blocks[idxZPos] == -2) this.blocks[idxZPos] = dist;
+                        }
+                    }
                 }
             }
-
         }
-    }
 
-    private void dropAndRemove(World arg, int i, int j, int k) {
-        this.dropStacks(arg, i, j, k, arg.getBlockMeta(i, j, k));
-        arg.setBlock(i, j, k, 0);
+        // 3. Evaluate center block result
+        int centerIdx = HALF_SIDE * STEP_X + HALF_SIDE * STEP_Y + HALF_SIDE;
+        if (this.blocks[centerIdx] >= 0) {
+            world.setBlockMetaWithoutNotifyingNeighbors(x, y, z, meta & -9);
+        } else {
+            this.dropStacks(world, x, y, z, world.getBlockMeta(x, y, z));
+            world.setBlock(x, y, z, 0);
+        }
     }
 
     protected int getDroppedItemMeta(int i) {
@@ -172,7 +167,6 @@ public class AetherLeaves extends TemplateTranslucentBlock {
 
     public void afterBreak(World world, PlayerEntity entityplayer, int i, int j, int k, int l) {
         if (!world.isRemote && entityplayer.getHand() != null && entityplayer.getHand().itemId == Item.SHEARS.id) {
-            //entityplayer.increaseStat(Stats.MINE_BLOCK[this.id], 1);
             this.dropStack(world, i, j, k, new ItemStack(this.asItem().id, 1, l & 3));
         } else {
             super.afterBreak(world, entityplayer, i, j, k, l);

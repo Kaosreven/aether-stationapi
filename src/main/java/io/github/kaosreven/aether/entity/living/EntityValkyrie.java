@@ -33,7 +33,7 @@ public class EntityValkyrie extends EntityDungeonMob implements BossLivingEntity
     private static final int TRACKED_BOSS_HP = 30;
 
     public boolean isSwinging;
-    public boolean boss;
+    public boolean boss = false;
     public boolean duel;
     public boolean hasDungeon;
     public int teleTimer;

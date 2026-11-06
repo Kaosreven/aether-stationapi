@@ -1,8 +1,10 @@
 package io.github.kaosreven.aether.block;
 
+import io.github.kaosreven.aether.achievement.AetherAchievements;
 import io.github.kaosreven.aether.mixin.access.EntityAccessor;
 import net.minecraft.block.material.Material;
 import net.minecraft.entity.Entity;
+import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.util.math.Box;
 import net.minecraft.world.BlockView;
 import net.minecraft.world.World;
@@ -19,11 +21,9 @@ public class Aercloud extends TemplateBlock implements MetaNamedBlockItemProvide
         if (!entity.isSneaking()) {
             if (world.getBlockMeta(i, j, k) == 1) {
                 entity.velocityY = 2.0;
-                /*
                 if (!world.isRemote && entity instanceof PlayerEntity player) {
                     AetherAchievements.giveAchievement(AetherAchievements.blueCloud, player);
                 }
-                 */
             }
             if (entity.velocityY < 0.0) {
                 entity.velocityY *= 0.005;

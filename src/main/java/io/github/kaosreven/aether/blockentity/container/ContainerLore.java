@@ -9,7 +9,66 @@ import net.minecraft.screen.ScreenHandler;
 import net.minecraft.screen.slot.Slot;
 
 public class ContainerLore extends ScreenHandler {
-    public Inventory loreSlot = new SimpleInventory("Lore Item", 1);
+    public Inventory loreSlot = new Inventory() {
+        private final ItemStack[] stacks = new ItemStack[1];
+
+        @Override
+        public int size() {
+            return 1;
+        }
+
+        @Override
+        public ItemStack getStack(int slot) {
+            return this.stacks[slot];
+        }
+
+        @Override
+        public ItemStack removeStack(int slot, int amount) {
+            if (this.stacks[slot] != null) {
+                ItemStack stack;
+                if (this.stacks[slot].count <= amount) {
+                    stack = this.stacks[slot];
+                    this.stacks[slot] = null;
+                    return stack;
+                } else {
+                    stack = this.stacks[slot].split(amount);
+                    if (this.stacks[slot].count == 0) {
+                        this.stacks[slot] = null;
+                    }
+                    return stack;
+                }
+            }
+            return null;
+        }
+
+        @Override
+        public void setStack(int slot, ItemStack stack) {
+            this.stacks[slot] = stack;
+            if (stack != null && stack.count > this.getMaxCountPerStack()) {
+                stack.count = this.getMaxCountPerStack();
+            }
+        }
+
+        @Override
+        public String getName() {
+            return "Lore Item";
+        }
+
+        @Override
+        public int getMaxCountPerStack() {
+            return 1;
+        }
+
+        @Override
+        public void markDirty() {
+
+        }
+
+        @Override
+        public boolean canPlayerUse(PlayerEntity player) {
+            return true;
+        }
+    };
 
     public ContainerLore(PlayerInventory inventoryplayer) {
         this.addSlot(new Slot(this.loreSlot, 0, 82, 66));

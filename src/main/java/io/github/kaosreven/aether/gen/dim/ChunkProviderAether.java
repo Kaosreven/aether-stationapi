@@ -171,7 +171,8 @@ public class ChunkProviderAether implements ChunkSource {
     }
 
     public Chunk getChunk(int chunkX, int chunkZ) {
-        random.setSeed((long) chunkX * 341873128712L + (long) chunkZ * 132897987541L);
+        //random.setSeed((long) chunkX * 341873128712L + (long) chunkZ * 132897987541L);
+        random.setSeed((chunkX * 341873128712L) ^ (chunkZ * 132897987541L));
 
         // Create FlattenedChunk directly instead of using byte array
         FlattenedChunk chunk = new FlattenedChunk(world, chunkX, chunkZ);

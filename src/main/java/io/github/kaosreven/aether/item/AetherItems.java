@@ -134,8 +134,8 @@ public class AetherItems {
         Stick = (new TemplateItem(Identifier.of(MOD_ID, "skyroot_stick"))).setTranslationKey(MOD_ID, "skyroot_stick");
         Dart = (new ItemDart(Identifier.of(MOD_ID, "dart"))).setHasSubtypes(true).setTranslationKey(MOD_ID, "dart");
         DartShooter = (new ItemDartShooter(Identifier.of(MOD_ID,"dart_shooter"))).setTranslationKey(MOD_ID, "dart_shooter");
-        AmbrosiumShard = (new ItemAmbrosium(Identifier.of(MOD_ID, "ambrosium"), 1, false)).setTranslationKey(MOD_ID, "ambrosium");
-        HealingStone = (new ItemAmbrosium(Identifier.of(MOD_ID, "healing_stone"), 4, false)).setTranslationKey(MOD_ID, "healing_stone");
+        AmbrosiumShard = (new TemplateFoodItem(Identifier.of(MOD_ID, "ambrosium"), 1, false)).setMaxCount(64).setTranslationKey(MOD_ID, "ambrosium");
+        HealingStone = (new TemplateFoodItem(Identifier.of(MOD_ID, "healing_stone"), 4, false)).setMaxCount(64).setTranslationKey(MOD_ID, "healing_stone");
         Zanite = (new TemplateItem(Identifier.of(MOD_ID, "zanite"))).setTranslationKey(MOD_ID, "zanite");
         LifeShard = (new ItemLifeShard(Identifier.of(MOD_ID, "life_shard"))).setTranslationKey(MOD_ID, "life_shard");
         BlueMusicDisk = (new ItemAetherRecord(Identifier.of(MOD_ID, "blue_music_disc"), "aether:aethertune", "Noisestorm - Aethertune")).setTranslationKey(MOD_ID, "blue_music_disc");

@@ -1,21 +1,21 @@
 package io.github.kaosreven.aether.client.gui;
 
-import io.github.kaosreven.aether.blockentity.block.BlockEntityIncubator;
+import io.github.kaosreven.aether.blockentity.block.BlockEntityAetherMachine;
 import io.github.kaosreven.aether.blockentity.container.ContainerIncubator;
 import net.minecraft.client.gui.screen.ingame.HandledScreen;
 import net.minecraft.entity.player.PlayerInventory;
 import org.lwjgl.opengl.GL11;
 
 public class GuiIncubator extends HandledScreen {
-    private final BlockEntityIncubator incubatorInventory;
+    public BlockEntityAetherMachine Inventory;
 
-    public GuiIncubator(PlayerInventory inventoryplayer, BlockEntityIncubator tileentityIncubator) {
+    public GuiIncubator(PlayerInventory inventoryplayer, BlockEntityAetherMachine tileentityIncubator) {
         super(new ContainerIncubator(inventoryplayer, tileentityIncubator));
-        this.incubatorInventory = tileentityIncubator;
+        this.Inventory = tileentityIncubator;
     }
 
     protected void drawForeground() {
-        this.textRenderer.draw("Incubator", 60, 6, 4210752);
+        this.textRenderer.draw(Inventory.getName(), 60, 6, 4210752);
         this.textRenderer.draw("Inventory", 8, this.backgroundHeight - 96 + 2, 4210752);
     }
 
@@ -27,12 +27,12 @@ public class GuiIncubator extends HandledScreen {
         int k = (this.height - this.backgroundHeight) / 2;
         this.drawTexture(j, k, 0, 0, this.backgroundWidth, this.backgroundHeight);
         int i1;
-        if (this.incubatorInventory.isBurning()) {
-            i1 = this.incubatorInventory.getBurnTimeRemainingScaled(12);
+        if (this.Inventory.isBurning()) {
+            i1 = this.Inventory.getBurnTimeRemainingScaled(12);
             this.drawTexture(j + 74, k + 47 - i1, 176, 12 - i1, 14, i1 + 2);
         }
 
-        i1 = this.incubatorInventory.getCookProgressScaled(54);
+        i1 = this.Inventory.getCookProgressScaled(54);
         this.drawTexture(j + 103, k + 70 - i1, 179, 70 - i1, 10, i1);
     }
 }

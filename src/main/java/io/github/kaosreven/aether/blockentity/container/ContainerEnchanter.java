@@ -1,5 +1,6 @@
 package io.github.kaosreven.aether.blockentity.container;
 
+import io.github.kaosreven.aether.blockentity.block.BlockEntityAetherMachine;
 import io.github.kaosreven.aether.blockentity.block.BlockEntityEnchanter;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.player.PlayerInventory;
@@ -10,13 +11,13 @@ import net.minecraft.screen.slot.FurnaceOutputSlot;
 import net.minecraft.screen.slot.Slot;
 
 public class ContainerEnchanter extends ScreenHandler {
-    private final BlockEntityEnchanter enchanter;
-    private int cookTime = 0;
-    private int burnTime = 0;
-    private int itemBurnTime = 0;
+    public BlockEntityAetherMachine machine;
+    public int cookTime = 0;
+    public int burnTime = 0;
+    public int itemBurnTime = 0;
 
-    public ContainerEnchanter(PlayerInventory inventoryplayer, BlockEntityEnchanter tileentityenchanter) {
-        this.enchanter = tileentityenchanter;
+    public ContainerEnchanter(PlayerInventory inventoryplayer, BlockEntityAetherMachine tileentityenchanter) {
+        this.machine = tileentityenchanter;
         this.addSlot(new Slot(tileentityenchanter, 0, 56, 17));
         this.addSlot(new Slot(tileentityenchanter, 1, 56, 53));
         this.addSlot(new FurnaceOutputSlot(inventoryplayer.player, tileentityenchanter, 2, 116, 35));
@@ -42,41 +43,41 @@ public class ContainerEnchanter extends ScreenHandler {
 
         for (Object listener : this.listeners) {
             ScreenHandlerListener icrafting = (ScreenHandlerListener) listener;
-            if (this.cookTime != this.enchanter.enchantTimeForItem) {
-                icrafting.onPropertyUpdate(this, 0, this.enchanter.enchantTimeForItem);
+            if (this.cookTime != this.machine.TimeForItem) {
+                icrafting.onPropertyUpdate(this, 0, this.machine.TimeForItem);
             }
 
-            if (this.burnTime != this.enchanter.enchantProgress) {
-                icrafting.onPropertyUpdate(this, 1, this.enchanter.enchantProgress);
+            if (this.burnTime != this.machine.Progress) {
+                icrafting.onPropertyUpdate(this, 1, this.machine.Progress);
             }
 
-            if (this.itemBurnTime != this.enchanter.enchantPowerRemaining) {
-                icrafting.onPropertyUpdate(this, 2, this.enchanter.enchantPowerRemaining);
+            if (this.itemBurnTime != this.machine.PowerRemaining) {
+                icrafting.onPropertyUpdate(this, 2, this.machine.PowerRemaining);
             }
         }
 
-        this.cookTime = this.enchanter.enchantTimeForItem;
-        this.burnTime = this.enchanter.enchantProgress;
-        this.itemBurnTime = this.enchanter.enchantPowerRemaining;
+        this.cookTime = this.machine.TimeForItem;
+        this.burnTime = this.machine.Progress;
+        this.itemBurnTime = this.machine.PowerRemaining;
     }
 
     public void setProperty(int i, int j) {
         if (i == 0) {
-            this.enchanter.enchantTimeForItem = j;
+            this.machine.TimeForItem = j;
         }
 
         if (i == 1) {
-            this.enchanter.enchantProgress = j;
+            this.machine.Progress = j;
         }
 
         if (i == 2) {
-            this.enchanter.enchantPowerRemaining = j;
+            this.machine.PowerRemaining = j;
         }
 
     }
 
     public boolean canUse(PlayerEntity entityplayer) {
-        return this.enchanter.canPlayerUse(entityplayer);
+        return this.machine.canPlayerUse(entityplayer);
     }
 
     public ItemStack quickMove(int i) {

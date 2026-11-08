@@ -1,7 +1,7 @@
 package io.github.kaosreven.aether.block;
 
 import io.github.kaosreven.aether.blockentity.block.BlockEntityFreezer;
-import io.github.kaosreven.aether.blockentity.container.ContainerFreezer;
+import io.github.kaosreven.aether.blockentity.container.ContainerEnchanter;
 import net.minecraft.block.Block;
 import net.minecraft.block.entity.BlockEntity;
 import net.minecraft.block.material.Material;
@@ -86,7 +86,7 @@ public class Freezer extends TemplateBlockWithEntity {
     public boolean onUse(World world, int i, int j, int k, PlayerEntity player) {
         if (!world.isRemote) {
             BlockEntityFreezer tileentityFreezer = (BlockEntityFreezer) world.getBlockEntity(i, j, k);
-            GuiHelper.openGUI(player, MOD_ID.id("freezer"), tileentityFreezer, new ContainerFreezer(player.inventory, tileentityFreezer));
+            GuiHelper.openGUI(player, MOD_ID.id("freezer"), tileentityFreezer, new ContainerEnchanter(player.inventory, tileentityFreezer));
         }
         return true;
     }

@@ -2,20 +2,16 @@ package io.github.kaosreven.aether.blockentity.block;
 
 import io.github.kaosreven.aether.block.AetherBlocks;
 import io.github.kaosreven.aether.item.AetherItems;
-import net.minecraft.block.entity.BlockEntity;
-import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.inventory.Inventory;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
-import net.minecraft.nbt.NbtCompound;
-import net.minecraft.nbt.NbtList;
 import java.util.ArrayList;
 import java.util.List;
 
 import static io.github.kaosreven.aether.block.AetherBlocks.MOD_ID;
 
-public class BlockEntityEnchanter extends BlockEntity implements Inventory {
-    private static final List<Enchantment> enchantments = new ArrayList();
+public class BlockEntityEnchanter extends BlockEntityAetherMachine implements Inventory {
+    private static final List<Enchantment> enchantments = new ArrayList<>();
 
     static {
         addEnchantment(new ItemStack(AetherBlocks.GravititeOre, 1), new ItemStack(AetherBlocks.EnchantedGravitite, 1), 1000);
@@ -102,10 +98,6 @@ public class BlockEntityEnchanter extends BlockEntity implements Inventory {
         addEnchantment(new ItemStack(AetherItems.DartShooter, 1, 0), new ItemStack(AetherItems.DartShooter, 1, 2), 2000);
     }
 
-    public int enchantProgress = 0;
-    public int enchantPowerRemaining = 0;
-    public int enchantTimeForItem = 0;
-    private ItemStack[] enchanterItemStacks = new ItemStack[3];
     private Enchantment currentEnchantment;
 
     public BlockEntityEnchanter() {
@@ -115,124 +107,39 @@ public class BlockEntityEnchanter extends BlockEntity implements Inventory {
         enchantments.add(new Enchantment(from, to, i));
     }
 
-    public int size() {
-        return this.enchanterItemStacks.length;
-    }
-
-    public ItemStack getStack(int i) {
-        return this.enchanterItemStacks[i];
-    }
-
-    public ItemStack removeStack(int i, int j) {
-        if (this.enchanterItemStacks[i] != null) {
-            ItemStack itemstack1;
-            if (this.enchanterItemStacks[i].count <= j) {
-                itemstack1 = this.enchanterItemStacks[i];
-                this.enchanterItemStacks[i] = null;
-            } else {
-                itemstack1 = this.enchanterItemStacks[i].split(j);
-                if (this.enchanterItemStacks[i].count == 0) {
-                    this.enchanterItemStacks[i] = null;
-                }
-
-            }
-            return itemstack1;
-        } else {
-            return null;
-        }
-    }
-
-    public void setStack(int i, ItemStack itemstack) {
-        this.enchanterItemStacks[i] = itemstack;
-        if (itemstack != null && itemstack.count > this.getMaxCountPerStack()) {
-            itemstack.count = this.getMaxCountPerStack();
-        }
-
-    }
-
+    @Override
     public String getName() {
         return MOD_ID.id("Enchanter").path;
     }
 
-    public void readNbt(NbtCompound nbttagcompound) {
-        super.readNbt(nbttagcompound);
-        NbtList nbttaglist = nbttagcompound.getList("Items");
-        this.enchanterItemStacks = new ItemStack[this.size()];
-
-        for (int i = 0; i < nbttaglist.size(); ++i) {
-            NbtCompound nbttagcompound1 = (NbtCompound) nbttaglist.get(i);
-            byte byte0 = nbttagcompound1.getByte("Slot");
-            if (byte0 >= 0 && byte0 < this.enchanterItemStacks.length) {
-                this.enchanterItemStacks[byte0] = new ItemStack(nbttagcompound1);
-            }
-        }
-
-        this.enchantProgress = nbttagcompound.getShort("BurnTime");
-        this.enchantTimeForItem = nbttagcompound.getShort("CookTime");
-    }
-
-    public void writeNbt(NbtCompound nbttagcompound) {
-        super.writeNbt(nbttagcompound);
-        nbttagcompound.putShort("BurnTime", (short) this.enchantProgress);
-        nbttagcompound.putShort("CookTime", (short) this.enchantTimeForItem);
-        NbtList nbttaglist = new NbtList();
-
-        for (int i = 0; i < this.enchanterItemStacks.length; ++i) {
-            if (this.enchanterItemStacks[i] != null) {
-                NbtCompound nbttagcompound1 = new NbtCompound();
-                nbttagcompound1.putByte("Slot", (byte) i);
-                this.enchanterItemStacks[i].writeNbt(nbttagcompound1);
-                nbttaglist.add(nbttagcompound1);
-            }
-        }
-
-        nbttagcompound.put("Items", nbttaglist);
-    }
-
-    public int getMaxCountPerStack() {
-        return 64;
-    }
-
-    public int getCookProgressScaled(int i) {
-        return this.enchantTimeForItem == 0 ? 0 : this.enchantProgress * i / this.enchantTimeForItem;
-    }
-
-    public int getBurnTimeRemainingScaled(int i) {
-        return this.enchantPowerRemaining * i / 500;
-    }
-
-    public boolean isBurning() {
-        return this.enchantPowerRemaining > 0;
-    }
-
     public void tick() {
-        if (this.enchantPowerRemaining > 0) {
-            --this.enchantPowerRemaining;
+        if (this.PowerRemaining > 0) {
+            --this.PowerRemaining;
             if (this.currentEnchantment != null) {
-                ++this.enchantProgress;
+                ++this.Progress;
             }
         }
 
-        if (this.currentEnchantment != null && (this.enchanterItemStacks[0] == null || this.enchanterItemStacks[0].itemId != this.currentEnchantment.enchantFrom.itemId)) {
+        if (this.currentEnchantment != null && (this.ItemStacks[0] == null || this.ItemStacks[0].itemId != this.currentEnchantment.enchantFrom.itemId)) {
             this.currentEnchantment = null;
-            this.enchantProgress = 0;
+            this.Progress = 0;
         }
 
-        if (this.currentEnchantment != null && this.enchantProgress >= this.currentEnchantment.enchantPowerNeeded) {
-            if (this.enchanterItemStacks[2] == null) {
+        if (this.currentEnchantment != null && this.Progress >= this.currentEnchantment.enchantPowerNeeded) {
+            if (this.ItemStacks[2] == null) {
                 this.setStack(2, new ItemStack(this.currentEnchantment.enchantTo.getItem(), 1, this.currentEnchantment.enchantTo.getDamage()));
             } else {
                 this.setStack(2, new ItemStack(this.currentEnchantment.enchantTo.getItem(), this.getStack(2).count + 1, this.currentEnchantment.enchantTo.getDamage()));
             }
 
             this.removeStack(0, 1);
-            this.enchantProgress = 0;
+            this.Progress = 0;
             this.currentEnchantment = null;
-            this.enchantTimeForItem = 0;
+            this.TimeForItem = 0;
         }
 
-        if (this.enchantPowerRemaining <= 0 && this.currentEnchantment != null && this.getStack(1) != null && this.getStack(1).itemId == AetherItems.AmbrosiumShard.id) {
-            this.enchantPowerRemaining += 500;
+        if (this.PowerRemaining <= 0 && this.currentEnchantment != null && this.getStack(1) != null && this.getStack(1).itemId == AetherItems.AmbrosiumShard.id) {
+            this.PowerRemaining += 500;
             this.removeStack(1, 1);
         }
 
@@ -241,25 +148,17 @@ public class BlockEntityEnchanter extends BlockEntity implements Inventory {
 
             for (Enchantment enchantment : enchantments) {
                 if (itemstack != null && enchantment != null && itemstack.itemId == enchantment.enchantFrom.itemId) {
-                    if (this.enchanterItemStacks[2] == null) {
+                    if (this.ItemStacks[2] == null) {
                         this.currentEnchantment = enchantment;
-                        this.enchantTimeForItem = this.currentEnchantment.enchantPowerNeeded;
-                    } else if (this.enchanterItemStacks[2].itemId == enchantment.enchantTo.itemId && enchantment.enchantTo.getItem().getMaxCount() > this.enchanterItemStacks[2].count) {
+                        this.TimeForItem = this.currentEnchantment.enchantPowerNeeded;
+                    } else if (this.ItemStacks[2].itemId == enchantment.enchantTo.itemId && enchantment.enchantTo.getItem().getMaxCount() > this.ItemStacks[2].count) {
                         this.currentEnchantment = enchantment;
-                        this.enchantTimeForItem = this.currentEnchantment.enchantPowerNeeded;
+                        this.TimeForItem = this.currentEnchantment.enchantPowerNeeded;
                     }
                 }
             }
         }
 
-    }
-
-    public boolean canPlayerUse(PlayerEntity entityplayer) {
-        if (this.world.getBlockEntity(this.x, this.y, this.z) != this) {
-            return false;
-        } else {
-            return entityplayer.getSquaredDistance((double) this.x + 0.5, (double) this.y + 0.5, (double) this.z + 0.5) <= 64.0;
-        }
     }
 
     static class Enchantment {

@@ -339,19 +339,14 @@ public class GuiLore extends HandledScreen {
     protected void drawForeground() {
         this.textRenderer.draw("Book Of Lore", 37, 18, 4210752);
         this.textRenderer.draw("Volume " + (this.type + 1), 47, 28, 4210752);
-        switch (this.type) {
-            case 0: {
-                this.textRenderer.draw("The Surface", 37, 38, 4210752);
-                break;
-            }
-            case 1: {
-                this.textRenderer.draw("The Nether", 37, 38, 4210752);
-                break;
-            }
-            case 2: {
-                this.textRenderer.draw("The Aether", 37, 38, 4210752);
-                break;
-            }
+        if (this.type == 0) {
+            this.textRenderer.draw("The Surface", 37, 38, 4210752);
+        }
+        else if (this.type == 1) {
+            this.textRenderer.draw("The Nether", 37, 38, 4210752);
+        }
+        else {
+            this.textRenderer.draw("The Aether", 37, 38, 4210752);
         }
         this.textRenderer.draw("Item : ", 46, 72, 4210752);
         final ItemStack item = ((ContainerLore) this.handler).loreSlot.getStack(0);

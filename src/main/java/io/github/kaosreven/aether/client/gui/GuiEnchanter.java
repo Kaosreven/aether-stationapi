@@ -1,24 +1,22 @@
 package io.github.kaosreven.aether.client.gui;
 
-import io.github.kaosreven.aether.blockentity.block.BlockEntityEnchanter;
+import io.github.kaosreven.aether.blockentity.block.BlockEntityAetherMachine;
 import io.github.kaosreven.aether.blockentity.container.ContainerEnchanter;
 import net.minecraft.client.gui.screen.ingame.HandledScreen;
 import net.minecraft.entity.player.PlayerInventory;
 import org.lwjgl.opengl.GL11;
 
-import static io.github.kaosreven.aether.block.AetherBlocks.MOD_ID;
-
 
 public class GuiEnchanter extends HandledScreen {
-    private final BlockEntityEnchanter enchanterInventory;
+    public BlockEntityAetherMachine Inventory;
 
-    public GuiEnchanter(PlayerInventory inventoryplayer, BlockEntityEnchanter tileentityEnchanter) {
+    public GuiEnchanter(PlayerInventory inventoryplayer, BlockEntityAetherMachine tileentityEnchanter) {
         super(new ContainerEnchanter(inventoryplayer, tileentityEnchanter));
-        this.enchanterInventory = tileentityEnchanter;
+        this.Inventory = tileentityEnchanter;
     }
 
     protected void drawForeground() {
-        this.textRenderer.draw(MOD_ID.id("Enchanter").path, 60, 6, 4210752);
+        this.textRenderer.draw(Inventory.getName(), 60, 6, 4210752);
         this.textRenderer.draw("Inventory", 8, this.backgroundHeight - 96 + 2, 4210752);
     }
 
@@ -30,12 +28,12 @@ public class GuiEnchanter extends HandledScreen {
         int k = (this.height - this.backgroundHeight) / 2;
         this.drawTexture(j, k, 0, 0, this.backgroundWidth, this.backgroundHeight);
         int i1;
-        if (this.enchanterInventory.isBurning()) {
-            i1 = this.enchanterInventory.getBurnTimeRemainingScaled(12);
+        if (this.Inventory.isBurning()) {
+            i1 = this.Inventory.getBurnTimeRemainingScaled(12);
             this.drawTexture(j + 57, k + 47 - i1, 176, 12 - i1, 14, i1 + 2);
         }
 
-        i1 = this.enchanterInventory.getCookProgressScaled(24);
+        i1 = this.Inventory.getCookProgressScaled(24);
         this.drawTexture(j + 79, k + 35, 176, 14, i1 + 1, 16);
     }
 }
